@@ -1,0 +1,34 @@
+-- Tabela: usuario
+CREATE TABLE usuario (
+  id SERIAL PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  cpf VARCHAR(14) UNIQUE NOT NULL,
+  telefone VARCHAR(20) NOT NULL,
+  endereco TEXT NOT NULL,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  senha VARCHAR(255) NOT NULL,
+  tipo VARCHAR(10) NOT NULL CHECK (tipo IN ('ADMIN', 'ADOTANTE'))
+);
+
+-- Tabela: animal
+CREATE TABLE animal (
+  id SERIAL PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  especie VARCHAR(50) NOT NULL,
+  raca VARCHAR(50) NOT NULL,
+  idade INT NOT NULL,
+  porte VARCHAR(20) NOT NULL,
+  descricao TEXT NOT NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'Disponível' CHECK (status IN ('Disponível', 'Adotado')),
+  foto_url TEXT
+);
+
+-- Tabela: adocao
+CREATE TABLE adocao (
+  id SERIAL PRIMARY KEY,
+  id_animal INT NOT NULL,
+  id_usuario INT NOT NULL,
+  data_adocao DATE NOT NULL DEFAULT CURRENT_DATE,
+  FOREIGN KEY (id_animal) REFERENCES animal(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id) ON DELETE CASCADE
+);
