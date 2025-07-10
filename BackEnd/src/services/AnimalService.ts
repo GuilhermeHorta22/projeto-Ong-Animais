@@ -2,9 +2,13 @@ import { pool } from '../dataBase/connection.js';
 import { Animal } from '../models/AnimalModel.js';
 
 export class AnimalService {
-    async listar(): Promise<Animal[]> { //listando todos os animais
+    async listar(): Promise<Animal[] | null> { //listando todos os animais
         const result = await pool.query('SELECT * FROM animal');
-        return result.rows;
+
+        if(result.rows.length > 0)
+            return result.rows;
+        else
+            return null;
     }
 
     async buscar(id: number): Promise<Animal | null> { //buscando um animal pelo id
