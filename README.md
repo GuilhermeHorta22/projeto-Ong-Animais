@@ -6,7 +6,7 @@ Este projeto é uma aplicação web desenvolvida para auxiliar no gerenciamento 
 
 O sistema é dividido em:
 
-- **Backend:** API REST desenvolvida com **TypeScript**, **Node.js**, **Express** e **Prisma**, responsável pelo gerenciamento de dados e regras de negócio.
+- **Backend:** API REST desenvolvida com **TypeScript**, **Node.js** e **Express**, responsável pelo gerenciamento de dados e regras de negócio.
 - **Frontend:** Aplicação **React** construída com **JavaScript**, oferecendo uma interface moderna e intuitiva para administradores e visitantes.
 
 ## 👥 Perfis de Usuário
@@ -61,7 +61,6 @@ O sistema é dividido em:
 - [Node.js](https://nodejs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Express](https://expressjs.com/)
-- [Prisma ORM](https://www.prisma.io/)
 - [PostgreSQL](https://www.postgresql.org/)
 
 ### Frontend
