@@ -75,30 +75,30 @@ O sistema é dividido em:
 
 ### 🐾 Rotas de Animais
 
-| Método | Endpoint               | Ação               |
-|--------|------------------------|--------------------|
-| GET    | `/api/animais`         | Listar animais     |
-| POST   | `/api/animais`         | Cadastrar animal   |
-| PUT    | `/api/animais/:id`     | Atualizar animal   |
-| DELETE | `/api/animais/:id`     | Deletar animal     |
-| GET    | `/api/animais/:id`     | Buscar por ID      |
+| Método | Endpoint           | Ação                     |
+|--------|--------------------|--------------------------|
+| GET    | `/animais`         | Listar animais           |
+| POST   | `/animais`         | Cadastrar animal         |
+| PUT    | `/animais/:id`     | Atualizar animal         |
+| DELETE | `/animais/:id`     | Deletar animal           |
+| GET    | `/animais/:id`     | Buscar por ID            |
 
 ### 👥 Rotas de Usuários (Adotantes e Administradores)
 
-| Método | Endpoint                 | Ação                            |
-|--------|--------------------------|---------------------------------|
-| GET    | `/api/usuarios`          | Listar usuários                 |
-| POST   | `/api/usuarios`          | Cadastrar usuário               |
-| PUT    | `/api/usuarios/:id`      | Atualizar usuário               |
-| DELETE | `/api/usuarios/:id`      | Deletar usuário                 |
-| GET    | `/api/usuarios/:id`      | Buscar usuário por ID           |
+| Método | Endpoint             | Ação                   |
+|--------|----------------------|------------------------|
+| GET    | `/usuarios`          | Listar usuários        |
+| POST   | `/usuarios`          | Cadastrar usuário      |
+| PUT    | `/usuarios/:id`      | Atualizar usuário      |
+| DELETE | `/usuarios/:id`      | Deletar usuário        |
+| GET    | `/usuarios/:id`      | Buscar usuário por ID  |
 
 
 ### 📄 Rotas de Adoções
 
-| Método | Endpoint            | Ação                   |
-|--------|---------------------|------------------------|
-| GET    | `/api/adocoes`      | Listar adoções         |
-| POST   | `/api/adocoes`      | Registrar nova adoção  |
+| Método | Endpoint        | Ação                        |
+|--------|-----------------|-----------------------------|
+| GET    | `/adocoes`      | Listar adoções              |
+| POST   | `/adocoes`      | Registrar nova adoção       |
 
 ---
