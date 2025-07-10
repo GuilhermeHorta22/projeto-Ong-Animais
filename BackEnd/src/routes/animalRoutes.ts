@@ -6,12 +6,13 @@ import {
     deletarAnimal,
     atualizarAnimal
 } from '../controllers/AnimalController.js';
+import { upload } from '../config/multer.js'
 
 const router = Router();
 
 router.get('/', listarAnimal);
 router.get('/:id', buscarAnimal);
-router.post('/', criarAnimal);
+router.post('/', upload.single('foto'), criarAnimal);
 router.delete('/:id', deletarAnimal);
 router.put('/:id', atualizarAnimal);
 

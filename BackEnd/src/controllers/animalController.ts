@@ -23,10 +23,10 @@ export const buscarAnimal = async (req: Request, res: Response) => {
 };
 
 export const criarAnimal = async (req: Request, res: Response) => {
+    const foto_url = req.file?.filename;
     const {nome, especie, raca, idade, porte, descricao, status} = req.body;
-    const foto = req.file?.filename;
 
-    const novoAnimal =  await service.criar({nome, especie, raca, idade, porte, descricao, status, foto});
+    const novoAnimal =  await service.criar({nome, especie, raca, idade, porte, descricao, status, foto_url});
     res.status(201).json(novoAnimal);
 };
 
@@ -38,7 +38,7 @@ export const deletarAnimal = async(req: Request, res: Response) => {
 
 export const atualizarAnimal = async(req: Request, res: Response) => {
     const id = parseInt(req.params.id);
-    const {nome, especie, raca, idade, porte, descricao, status, foto} = req.body;
-    const novoAnimal = await service.atualizar(id, {nome, especie, raca, idade, porte, descricao, status, foto});
+    const {nome, especie, raca, idade, porte, descricao, status, foto_url} = req.body;
+    const novoAnimal = await service.atualizar(id, {nome, especie, raca, idade, porte, descricao, status, foto_url});
     res.json(novoAnimal);
 };

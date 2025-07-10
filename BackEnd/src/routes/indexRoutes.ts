@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import animalRoutes from './AnimalRoutes.js';
+import animalRoutes from './animalRoutes.js';
 
 const routes = Router();
 

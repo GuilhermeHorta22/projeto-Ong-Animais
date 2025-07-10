@@ -7,5 +7,5 @@ export type Animal = {
     porte: string;
     descricao: string;
     status: string;
-    foto?: string;
+    foto_url?: string;
 }

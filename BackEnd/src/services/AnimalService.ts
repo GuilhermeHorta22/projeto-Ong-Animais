@@ -16,10 +16,19 @@ export class AnimalService {
             return null;
     }
 
-    async criar(animal: Omit<Animal, 'id'>): Promise<Animal> { //cadastrando um novo animal
+    async criar(animal: Omit<Animal, 'id'>): Promise<Animal> {
         const result = await pool.query(
-            'INSERT INTO animal (nome, especie, raca, idade, porte, descricao, status, foto_url) VALUES ($1, $2, $3, $4, $5, $6, $7,$8) RETURNING *',
-            [animal.nome, animal.especie, animal.raca, animal.idade, animal.porte, animal.descricao, animal.status, animal.foto]
+            'INSERT INTO animal (nome, especie, raca, idade, porte, descricao, status, foto_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
+            [
+                animal.nome,
+                animal.especie,
+                animal.raca,
+                animal.idade,
+                animal.porte,
+                animal.descricao,
+                animal.status,
+                animal.foto_url
+            ]
         );
         return result.rows[0];
     }
@@ -31,7 +40,7 @@ export class AnimalService {
     async atualizar(id: number, animal: Omit<Animal, 'id'>): Promise<Animal> { //atualiza o resgistro de um animal
         const result = await pool.query(
             'UPDATE animal SET nome = $1, especie = $2, raca = $3, idade = $4, porte = $5, descricao = $6, status = $7, foto_url = $8 RETURNING *',
-            [animal.nome, animal.especie, animal.raca, animal.idade, animal.porte, animal.descricao, animal.status, animal.foto]
+            [animal.nome, animal.especie, animal.raca, animal.idade, animal.porte, animal.descricao, animal.status, animal.foto_url]
         );
         return result.rows[0];
     }
