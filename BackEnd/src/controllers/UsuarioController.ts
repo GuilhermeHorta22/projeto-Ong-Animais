@@ -13,7 +13,7 @@ export const listarUsuario = async (req: Request, res: Response) => {
 };
 
 export const buscarUsuario = async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id);""
 
     if(isNaN(id))
         return res.status(400).json({error: 'ID invalido!'});
