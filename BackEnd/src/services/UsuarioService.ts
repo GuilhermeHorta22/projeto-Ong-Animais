@@ -1,5 +1,8 @@
 import { pool } from '../dataBase/connection.js';
 import { Usuario } from '../models/UsuarioModel.js';
+import bcrypt from 'bcrypt';
+
+const saltRounds = 10;
 
 export class UsuarioService {
 
@@ -44,6 +47,8 @@ export class UsuarioService {
     }
 
     async criar(usuario: Omit<Usuario, 'id'>): Promise<Usuario> {
+        const senhaCriptografada = await bcrypt.hash(usuario.senha, saltRounds);
+
         if(await this.existCpf(usuario.cpf))
             throw new Error('CPF já cadastrado!');
         else
@@ -56,7 +61,7 @@ export class UsuarioService {
                     usuario.telefone,
                     usuario.endereco,
                     usuario.email,
-                    usuario.senha,
+                    senhaCriptografada,
                     usuario.tipo
                 ]
             );
