@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { UsuarioService } from '../services/UsuarioService.js';
+import  { cpfValidation, emailValidation }  from '../utils/UsuarioValidation.js';
 
 const service = new UsuarioService();
 
@@ -13,7 +14,7 @@ export const listarUsuario = async (req: Request, res: Response) => {
 };
 
 export const buscarUsuario = async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id);""
+    const id = parseInt(req.params.id);
 
     if(isNaN(id))
         return res.status(400).json({error: 'ID invalido!'});
@@ -30,6 +31,11 @@ export const criarUsuario = async (req: Request, res: Response) => {
 
     if(!nome || !cpf || !email || !senha || !tipo)
         return res.status(400).json({error: 'Dados obrigatorio faltando.'});
+
+    if(cpfValidation(cpf) === false)
+        return res.status(409).json({error: 'CPF inválido.'})
+    if(emailValidation(email) === false)
+        return res.status(409).json({error: 'Email inválido.'})
 
     const novoUsuario = await service.criar({nome, cpf, telefone, endereco, email, senha, tipo});
     return res.json(novoUsuario);
@@ -59,6 +65,11 @@ export const atualizarUsuario = async(req: Request, res: Response) => {
     {
         if(!nome || !cpf || !email || !senha || !tipo)
             return res.status(400).json({error: 'Dados obrigatório faltando.'});
+
+        if(cpfValidation(cpf) === false)
+            return res.status(409).json({error: 'CPF inválido.'});
+        if(emailValidation(email) === false)
+            return res.status(409).json({error: 'Email inválido.'});
 
         const novoUsuario = await service.alterar(id, {nome, cpf, telefone, endereco, email, senha, tipo});
         return res.json(novoUsuario);
