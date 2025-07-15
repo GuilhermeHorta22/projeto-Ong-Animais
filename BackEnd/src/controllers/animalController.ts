@@ -7,7 +7,7 @@ export const listarAnimal = async (req: Request, res: Response) => {
     const animais = await service.listar();
 
     if(animais === null)
-        return res.status(400).json({error: 'Não tem animais cadastrado!'});
+        return res.status(200).json({message: 'Não tem animais cadastrado!'});
 
     return res.json(animais);
 };
@@ -21,7 +21,7 @@ export const buscarAnimal = async (req: Request, res: Response) => {
     const animal = await service.buscar(id);
 
     if(animal === null)
-        return res.status(404).json({error: 'O animal não foi encontrado!'});
+        return res.status(200).json({message: 'O animal não foi encontrado!'});
 
     return res.json(animal);
 };
@@ -47,7 +47,7 @@ export const deletarAnimal = async(req: Request, res: Response) => {
         return res.sendStatus(204);
     }
     else
-        return res.status(404).json({error: 'Não existe animal com esse ID!'});
+        return res.status(200).json({message: 'Não existe animal com esse ID!'});
 };
 
 export const atualizarAnimal = async(req: Request, res: Response) => {
@@ -65,5 +65,5 @@ export const atualizarAnimal = async(req: Request, res: Response) => {
         return  res.json(novoAnimal);
     }
     else
-        return res.status(404).json({error: 'Animal com id: '+ id +' não foi encontrado.'});
+        return res.status(200).json({message: 'Animal com id: '+ id +' não foi encontrado.'});
 };

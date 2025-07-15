@@ -8,7 +8,7 @@ export const listarUsuario = async (req: Request, res: Response) => {
     const usuarios = await service.listar();
 
     if(usuarios === null)
-        return res.status(400).json({error: 'Não tem usuários cadastrado!'});
+        return res.status(200).json({message: 'Não tem usuários cadastrado!'});
 
     return res.json(usuarios);
 };
@@ -22,7 +22,7 @@ export const buscarUsuario = async (req: Request, res: Response) => {
     const usuario = await service.buscar(id);
 
     if(usuario === null)
-        return res.status(404).json({error: 'Não tem usuario com esse ID!'});
+        return res.status(200).json({message: 'Não tem usuario com esse ID!'});
     return res.json(usuario);
 };
 
@@ -51,7 +51,7 @@ export const deletarUsuario  = async (req: Request, res: Response) => {
         return res.status(204);
     }
     else
-        return res.status(400).json({error: 'Não existe um usuario com esse id.'});
+        return res.status(200).json({message: 'Não existe um usuario com esse id.'});
 
 };
 
@@ -75,5 +75,5 @@ export const atualizarUsuario = async(req: Request, res: Response) => {
         return res.json(novoUsuario);
     }
     else
-        return res.status(404).json({error: 'Usuario com id: '+ id +' não foi encontrado.'});
+        return res.status(200).json({message: 'Usuario com id: '+ id +' não foi encontrado.'});
 };
