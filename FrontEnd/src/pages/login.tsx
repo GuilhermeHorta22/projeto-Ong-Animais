@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import '../style/authForm.css';
+import '../style/global.css';
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -30,7 +32,6 @@ function Login() {
             localStorage.setItem('token', data.token);
             localStorage.setItem('tipo', data.tipo);
 
-            //aqui eu vou redirecionar para minhas paginas conforme o tipo da pessoa
             if(data.tipo === 'ADMIN')
                 window.location.href = '/admin';
             else
@@ -38,26 +39,30 @@ function Login() {
         }
         catch(error)
         {
+            console.error(error);
             setErro('Erro de conexão com o servidor.');
         }
     };
 
     return (
-        <div style={{ maxWidth: 400, margin: '100px auto', padding: 20, border: '1px solid #ccc', borderRadius: 10 }}>
-        <h2>Login</h2>
-        <form onSubmit={handleLogin}>
-            <div style={{ marginBottom: 10 }}>
-            <label>Email:</label><br />
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-            </div>
-            <div style={{ marginBottom: 10 }}>
-            <label>Senha:</label><br />
-            <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} required />
-            </div>
-            {erro && <div style={{ color: 'red', marginBottom: 10 }}>{erro}</div>}
-            <button type="submit">Entrar</button>
-            <p>Não tem conta? <Link to="/cadastro">Cadastrar-se</Link></p>
-        </form>
+        <div className="containerStyle">
+            <h2>Login</h2>
+            <form onSubmit={handleLogin}>
+                <div>
+                <label className="labelStyle">Email:</label>
+                <input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="inputStyle" />
+                </div>
+
+                <div>
+                <label className="labelStyle">Senha:</label>
+                <input placeholder="Senha" type="password" value={senha} onChange={(e) => setSenha(e.target.value)} required className="inputStyle" />
+                </div>
+
+                {erro && <div className="errorStyle">{erro}</div>}
+
+                <button type="submit" className="buttonStyle">Entrar</button>
+                <p style={{ marginTop: 10 }}>Não tem conta? <Link to="/cadastro">Cadastrar-se</Link></p>
+            </form>
         </div>
     );
 }

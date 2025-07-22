@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import '../style/authForm.css';
+import '../style/global.css';
 
 export default function Cadastro() {
     const [formData, setFormData] = useState({
@@ -42,26 +44,39 @@ export default function Cadastro() {
         catch(error)
         {
             console.error('Erro ao cadastrar: ',error);
-            alert('Erro ao conectar com seridor.');
+            alert('Erro ao conectar com servidor.');
         }
     };
     return (
-    <div>
+    <div className="containerStyle">
       <h2>Cadastro</h2>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="nome" placeholder="Nome" onChange={handleChange} required />
-        <input type="text" name="cpf" placeholder="CPF" onChange={handleChange} required />
-        <input type="text" name="telefone" placeholder="Telefone" onChange={handleChange} required />
-        <input type="text" name="endereco" placeholder="Endereço" onChange={handleChange} required />
-        <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
-        <input type="password" name="senha" placeholder="Senha" onChange={handleChange} required />
+        <label className="labelStyle">Nome:</label>
+        <input type="text" name="nome" placeholder="Nome" onChange={handleChange} required className="inputStyle" />
 
-        <select name="tipo" onChange={handleChange} value={formData.tipo}>
+        <label className="labelStyle">CPF:</label>
+        <input type="text" name="cpf" placeholder="CPF" onChange={handleChange} required className="inputStyle" />
+
+        <label className="labelStyle">Telefone:</label>
+        <input type="text" name="telefone" placeholder="Telefone" onChange={handleChange} required className="inputStyle" />
+
+        <label className="labelStyle">Endereço:</label>
+        <input type="text" name="endereco" placeholder="Endereço" onChange={handleChange} required className="inputStyle" />
+
+        <label className="labelStyle">Email:</label>
+        <input type="email" name="email" placeholder="Email" onChange={handleChange} required className="inputStyle" />
+
+        <label className="labelStyle">Senha:</label>
+        <input type="password" name="senha" placeholder="Senha" onChange={handleChange} required className="inputStyle" />
+
+        <label className="labelStyle">Tipo de usuário:</label>
+        <select name="tipo" onChange={handleChange} value={formData.tipo} className="inputStyle">
           <option value="ADOTANTE">Adotante</option>
           <option value="ADMIN">Admin</option>
         </select>
 
-        <button type="submit">Cadastrar</button>
+        <br/> <br/> <br />
+        <button type="submit" className="buttonStyle">Cadastrar</button>
       </form>
     </div>
   );

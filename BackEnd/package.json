@@ -20,11 +20,13 @@
   },
   "homepage": "https://github.com/GuilhermeHorta22/projeto-Ong-Animais#readme",
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/node": "^24.0.7",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^5.1.0"
   }
 }
