@@ -1,8 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/login';
 import Cadastro from './pages/cadastro';
-//import AdminPage from './pages/AdminPage';
-//import AdotantePage from './pages/AdotantePage';
+import AdminPage from './pages/adminPage';
 
 function App() {
   return (
@@ -10,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/admin" element={<AdminPage />} />
       </Routes>
     </Router>
   );

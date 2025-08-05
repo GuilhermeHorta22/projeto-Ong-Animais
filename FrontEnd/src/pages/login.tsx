@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../style/authForm.css';
 import '../style/global.css';
 
 function Login() {
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [erro, setErro] = useState('');
@@ -32,10 +35,10 @@ function Login() {
             localStorage.setItem('token', data.token);
             localStorage.setItem('tipo', data.tipo);
 
-            if(data.tipo === 'ADMIN')
-                window.location.href = '/admin';
+            if (data.tipo === 'ADMIN')
+                navigate('/admin');
             else
-                window.location.href = '/adotante';
+                navigate('/adotante');
         }
         catch(error)
         {
