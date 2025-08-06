@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import '../style/authForm.css';
 import '../style/global.css';
+import '../style/cadastro.css'
 
 export default function Cadastro() {
     const [formData, setFormData] = useState({
@@ -75,9 +75,9 @@ export default function Cadastro() {
           <option value="ADMIN">Admin</option>
         </select>
 
-        <br/> <br/> <br />
         <button type="submit" className="buttonStyle">Cadastrar</button>
       </form>
     </div>
   );
+
 }
