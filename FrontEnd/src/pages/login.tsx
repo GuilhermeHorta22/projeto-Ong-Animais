@@ -52,13 +52,13 @@ function Login() {
             <h2>Login</h2>
             <form onSubmit={handleLogin}>
                 <div>
-                <label className="labelStyle">Email:</label>
+                <label className="">Email:</label>
                 <input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="inputStyle" />
                 </div>
 
                 <div>
                 <label className="labelStyle">Senha:</label>
-                <input placeholder="Senha" type="password" value={senha} onChange={(e) => setSenha(e.target.value)} required className="inputStyle" />
+                <input placeholder="Senha" type="password" value={senha} onChange={(e) => setSenha(e.target.value)} required className="color-slate-500" />
                 </div>
 
                 {erro && <div className="errorStyle">{erro}</div>}
