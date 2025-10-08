@@ -1,5 +1,3 @@
-import Button from "../components/Button";
-import Input from "../components/Input";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Label from "../components/Label";
@@ -49,37 +47,45 @@ function Login()
     };
 
     return (
-        <div className="w-screen h-screen bg-slate-900 flex justify-center p-6">
-            <div className="w-[500px] space-y-4">
-                <h1 className="text-white text-xl font-semibold text-center mb-4">
-                    Login no Sistema
+        <div className="w-screen h-screen bg-stone-200 flex justify-center items-center">
+            <div className="w-[400px] bg-slate-800 rounded-2xl shadow-xl p-8 space-y-6">
+                <h1 className="text-white text-2xl font-semibold text-center mb-6">
+                    Login do Sistema
                 </h1>
 
                 <div>
                     <Label>Email</Label>
-                    <Input 
-                        type="text" 
-                        placeholder="Digite seu E-mail" 
+                    <Input
+                        type="text"
+                        placeholder="Digite seu E-mail"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                    >
-                    </Input>
+                    />
                 </div>
+
                 <div>
-                    <Label>Password</Label>
+                    <Label>Senha</Label>
                     <Input
                         type="password"
                         placeholder="Digite sua senha"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                    >
-                    </Input>
+                    />
                 </div>
+
+                <div className="flex justify-center">
                 <Button onClick={handleLogin}>Entrar</Button>
-            </div>
-                <div className="mt-4 text-center">
-                    <p style={{ marginTop: 10 }}>Não tem conta? <Link to="/register">Cadastra-se</Link></p>
                 </div>
+
+                <div className="text-center text-stone-200 font-medium mt-4 select-none">
+                <p>
+                    Não tem conta?{" "}
+                    <Link to="/register" className="text-blue-400 hover:underline">
+                    Cadastre-se
+                    </Link>
+                </p>
+                </div>
+            </div>
         </div>
     );
 }
