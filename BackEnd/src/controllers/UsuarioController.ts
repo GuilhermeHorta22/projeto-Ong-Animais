@@ -29,7 +29,7 @@ export const buscarUsuario = async (req: Request, res: Response) => {
 export const criarUsuario = async (req: Request, res: Response) => {
     const {nome, cpf, telefone, endereco, email, senha, tipo} = req.body;
 
-    if(!nome || !cpf || !email || !senha || !tipo)
+    if(!nome || !cpf || !telefone || !endereco || !email || !senha || !tipo)
         return res.status(400).json({error: 'Dados obrigatorio faltando.'});
 
     if(cpfValidation(cpf) === false)
@@ -63,7 +63,7 @@ export const atualizarUsuario = async(req: Request, res: Response) => {
 
     if(result != null)
     {
-        if(!nome || !cpf || !email || !senha || !tipo)
+        if(!nome || !cpf || !telefone || !endereco || !email || !senha || !tipo)
             return res.status(400).json({error: 'Dados obrigatório faltando.'});
 
         if(cpfValidation(cpf) === false)
