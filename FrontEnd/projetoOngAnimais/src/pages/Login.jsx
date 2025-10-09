@@ -9,7 +9,7 @@ function Login()
     const navigate = useNavigate(); //redirecionar rotas
 
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [senha, setSenha] = useState("");
     const [error, setError] = useState("");
 
     const handleLogin = async () => {
@@ -20,7 +20,7 @@ function Login()
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email, senha })
             });
 
             const data = await response.json();
@@ -37,7 +37,7 @@ function Login()
             if(data.tipo === "ADMIN")
                 navigate("/admin");
             else
-                navigate("/usuario");
+                navigate("/adotante");
         }
         catch(error)
         {
@@ -68,14 +68,13 @@ function Login()
                     <Input
                         type="password"
                         placeholder="Digite sua senha"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={senha}
+                        onChange={(e) => setSenha(e.target.value)}
                     />
                 </div>
 
-                <div className="flex justify-center">
-                <Button onClick={handleLogin}>Entrar</Button>
-                </div>
+                <Button onClick={() => { console.log("Botão clicado"); handleLogin(); }}>Entrar</Button>
+
 
                 <div className="text-center text-stone-200 font-medium mt-4 select-none">
                 <p>
