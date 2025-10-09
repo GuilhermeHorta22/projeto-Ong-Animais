@@ -3,6 +3,9 @@ import { useNavigate, Link } from "react-router-dom";
 import Label from "../components/Label";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { formatCpf } from "../validation/cpf";
+import { formatTelefone } from "../validation/telefone";
+
 
 function Register()
 {
@@ -21,6 +24,7 @@ function Register()
     const handleRegister = async () => {
         setError("");
         setSucess("");
+        setTipo("");
 
         //validacao se o usuario preencheu todos os campos
         if(!nome || !cpf || !telefone || !endereco || !email || !senha)
@@ -78,7 +82,7 @@ function Register()
                     type="text"
                     placeholder="Digite seu CPF"
                     value={cpf}
-                    onChange={(e) => setCpf(e.target.value)}
+                    onChange={(e) => setCpf(formatCpf(e.target.value))}
                     />
                 </div>
 
@@ -88,7 +92,7 @@ function Register()
                     type="text"
                     placeholder="Digite seu telefone"
                     value={telefone}
-                    onChange={(e) => setTelefone(e.target.value)}
+                    onChange={(e) => setTelefone(formatTelefone(e.target.value))}
                     />
                 </div>
 
