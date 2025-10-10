@@ -1,6 +1,7 @@
 import Label from "../components/Label";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import Select from "../components/Select";
 import { useState } from "react";
 
 function CadastroAnimal ()
@@ -77,7 +78,96 @@ function CadastroAnimal ()
             {error && <p className="text-red-500">{error}</p>}
             {success && <p className="text-green-500 mb-2">{success}</p>}
 
+            <div>
+                <Label>Nome</Label>
+                <Input
+                    type="text"
+                    placeholder="Nome do animal"
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
+                />
+            </div> <br />
             
+            <div>
+                <Label>Espécie</Label>
+                <Input 
+                    type="text"
+                    placeholder="Especie do animal"
+                    value={especie}
+                    onChange={(e) => setEspecie(e.target.value)}
+                />
+            </div> <br />
+            
+            <div>
+                <Label>Raça</Label>
+                <Input 
+                    type="text"
+                    placeholder="Raça do animal"
+                    value={raca}
+                    onChange={(e) => setRaca(e.target.value)}
+                />
+            </div> <br />
+
+            <div>
+                <Label>Idade</Label>
+                <Input 
+                    type="number"
+                    placeholder="Idade do animal"
+                    value={idade}
+                    onChange={(e) => setIdade(parseInt(e.target.value))}
+                />
+            </div> <br />
+
+            <div>
+                <Label>Porte</Label>
+                <Input 
+                    type="text"
+                    placeholder="Porte do animal"
+                    value={porte}
+                    onChange={(e) => setPorte(e.target.value)}
+                />
+            </div> <br />
+
+            <div>
+                <Label>Descrição</Label>
+                <Input 
+                    type="text"
+                    placeholder="Descrição animal"
+                    value={descricao}
+                    onChange={(e) => setDescricao(e.target.value)}
+                />
+            </div> <br />
+
+            <div>
+                <Label>Status</Label>
+                <Select value={status} onChange={(e) => setStatus(e.target.value)}>
+                    <option value="Disponivel">Disponível</option>
+                    <option value="Indisponivel">Indisponível</option>
+                </Select>
+            </div> <br />
+
+            <div>
+                <Label>Foto</Label>
+                <div className="flex items-center justify-between bg-stone-100 rounded-md p-2 cursor-pointer hover:bg-stone-300 transition">
+                    <label htmlFor="foto" className="text-slate-700 font-medium cursor-pointer">
+                        {foto ? foto.name : "Escolher imagem..."}
+                    </label>
+                    <Input
+                        id="foto"
+                        type="file"
+                        accept="image/*" //vai permitir jpg, png, fig e etc
+                        className="hidden"
+                        onChange={(e) => setFoto(e.target.files[0])}
+                    />
+                    <span className="bg-slate-600 text-white text-sm px-3 py-1 rounded-md cursor-pointer hover:bg-slate-700">
+                        Procurar
+                    </span>
+                </div>
+            </div> <br />
+
+            <div className="flex justify-center mt-4">
+                <Button onClick={handleCadastrarAnimal()}>Cadastrar</Button>
+            </div>
         </div>
     );
 }

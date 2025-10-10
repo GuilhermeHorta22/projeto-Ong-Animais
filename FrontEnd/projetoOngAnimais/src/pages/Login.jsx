@@ -73,7 +73,7 @@ function Login()
                     />
                 </div>
 
-                <Button onClick={() => { console.log("Botão clicado"); handleLogin(); }}>Entrar</Button>
+                <Button onClick={handleLogin()}>Entrar</Button>
 
 
                 <div className="text-center text-stone-200 font-medium mt-4 select-none">
