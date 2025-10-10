@@ -5,7 +5,7 @@
 -- Dumped from database version 17.4
 -- Dumped by pg_dump version 17.4
 
--- Started on 2025-10-08 11:58:55
+-- Started on 2025-10-10 19:21:26
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -78,7 +78,7 @@ CREATE TABLE public.animal (
     descricao text NOT NULL,
     status character varying(20) DEFAULT 'Disponível'::character varying NOT NULL,
     foto_url text,
-    CONSTRAINT animal_status_check CHECK (((status)::text = ANY ((ARRAY['Disponível'::character varying, 'Adotado'::character varying])::text[])))
+    CONSTRAINT animal_status_check CHECK (((status)::text = ANY (ARRAY[('Disponível'::character varying)::text, ('Indisponível'::character varying)::text, ('Adotado'::character varying)::text])))
 );
 
 
@@ -209,6 +209,8 @@ COPY public.usuario (id, nome, cpf, telefone, endereco, email, senha, tipo) FROM
 1	Joao horta	206.543.010-93	18997815555	Itaicy de castro, 36	jvhorta14@gmail.com	$2b$10$rwxUI/wYn5YTGCPt9yvxdeUkl6UkKT.fPRFW9gI.DK1qG1/hBNekO	ADOTANTE
 3	Guilherme horta	35733261889	18996597119	Itaicy de castro, 36	ghorta800@gmail.com	$2b$10$1anadu67R/wELoaOygvJNuSoKO3nANxrgS8t/KLOLbbWsatRG96ae	ADMIN
 4	caio emerick	52590876823	187777777	rua das rosas, nº40	caioemerick@gmail.com	$2b$10$QhCR4n.orfZz8lgQnSR2jeZiTnXSqP60okC6yOneYZ3XG2iDgs4q6	ADOTANTE
+5	Joao Claudio	06987715831	18997788472	rua nelo liberati	joaoclaudio@gmail.com	$2b$10$wWy5.cels8QdFm49PFouvO9EgVChr6n/kb94jwtljYX78elgqw.Ki	ADOTANTE
+6	Guilherme Horta	823.940.220-86	(18)99995151	Itaicy de castro, Nº100	ghorta@gmail.com	$2b$10$lG6362WNRi8Mnx9hFo.dquftacnQsY.o6j3pNSQh814FdVrhMqTdq	ADMIN
 \.
 
 
@@ -227,7 +229,7 @@ SELECT pg_catalog.setval('public.adocao_id_seq', 1, false);
 -- Name: animal_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.animal_id_seq', 1, true);
+SELECT pg_catalog.setval('public.animal_id_seq', 3, true);
 
 
 --
@@ -236,7 +238,7 @@ SELECT pg_catalog.setval('public.animal_id_seq', 1, true);
 -- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.usuario_id_seq', 4, true);
+SELECT pg_catalog.setval('public.usuario_id_seq', 6, true);
 
 
 --
@@ -302,7 +304,7 @@ ALTER TABLE ONLY public.adocao
     ADD CONSTRAINT adocao_id_usuario_fkey FOREIGN KEY (id_usuario) REFERENCES public.usuario(id) ON DELETE CASCADE;
 
 
--- Completed on 2025-10-08 11:58:56
+-- Completed on 2025-10-10 19:21:27
 
 --
 -- PostgreSQL database dump complete

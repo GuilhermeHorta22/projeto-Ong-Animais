@@ -42,6 +42,9 @@ function CadastroAnimal ()
             const response = await fetch("http://localhost:3000/animais/", {
                 method: 'POST',
                 body: formData,
+                headers: {
+                    Accept: 'application/json',
+                },
             });
 
             const data = await response.json();
@@ -74,9 +77,6 @@ function CadastroAnimal ()
     return (
         <div className="w-full max-w-md mx-auto mt-10 p-6 bg-slate-800 rounded-md">
             <h1 className="text-white text-xl font-semibold text-center mb-4">Cadastro de Animal</h1>
-
-            {error && <p className="text-red-500">{error}</p>}
-            {success && <p className="text-green-500 mb-2">{success}</p>}
 
             <div>
                 <Label>Nome</Label>
@@ -141,32 +141,41 @@ function CadastroAnimal ()
             <div>
                 <Label>Status</Label>
                 <Select value={status} onChange={(e) => setStatus(e.target.value)}>
-                    <option value="Disponivel">Disponível</option>
-                    <option value="Indisponivel">Indisponível</option>
+                    <option value="">Selecione...</option>
+                    <option value="Disponível">Disponível</option>
+                    <option value="Indisponível">Indisponível</option>
                 </Select>
             </div> <br />
 
             <div>
                 <Label>Foto</Label>
-                <div className="flex items-center justify-between bg-stone-100 rounded-md p-2 cursor-pointer hover:bg-stone-300 transition">
-                    <label htmlFor="foto" className="text-slate-700 font-medium cursor-pointer">
+                <label
+                    htmlFor="foto"
+                    className="flex items-center justify-between bg-stone-100 rounded-md p-2 cursor-pointer hover:bg-stone-300 transition"
+                >
+                    <span className="text-slate-700 font-medium">
                         {foto ? foto.name : "Escolher imagem..."}
-                    </label>
-                    <Input
-                        id="foto"
-                        type="file"
-                        accept="image/*" //vai permitir jpg, png, fig e etc
-                        className="hidden"
-                        onChange={(e) => setFoto(e.target.files[0])}
-                    />
+                    </span>
+
                     <span className="bg-slate-600 text-white text-sm px-3 py-1 rounded-md cursor-pointer hover:bg-slate-700">
                         Procurar
                     </span>
-                </div>
+
+                    <input
+                        id="foto"
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => setFoto(e.target.files[0])}
+                    />
+                </label>
             </div> <br />
 
+            {error && <p className="text-red-500">{error}</p>}
+            {success && <p className="text-green-500 mb-2">{success}</p>}
+
             <div className="flex justify-center mt-4">
-                <Button onClick={handleCadastrarAnimal()}>Cadastrar</Button>
+                <Button onClick={handleCadastrarAnimal}>Cadastrar</Button>
             </div>
         </div>
     );
