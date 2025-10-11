@@ -1,9 +1,11 @@
+import AnimaisPage from "./AnimaisPage";
+
 function AdotantePage()
 {
 
     return (
         <div>
-            <h1>Pagina Adotante</h1>
+            <AnimaisPage modo="adotante" />
         </div>
     );
 }

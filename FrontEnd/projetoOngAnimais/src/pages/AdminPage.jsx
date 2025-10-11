@@ -1,5 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
+import { Edit3, Info } from 'lucide-react';
+import AnimaisPage from "./AnimaisPage";
 
 function AdminPage()
 {

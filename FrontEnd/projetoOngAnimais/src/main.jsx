@@ -10,6 +10,7 @@ import AdminPage from './pages/AdminPage.jsx';
 import AnimaisRelatorio from './pages/AnimaisRelatorio.jsx';
 import UsuariosRelatorio from './pages/UsuariosRelatorio.jsx';
 import CadastroAnimal from './pages/CadastroAnimal.jsx';
+import AnimaisPage from './pages/AnimaisPage.jsx';
 
 
 //vou criar minhas routes para as pages
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
     path: "/admin", //pagina pai que rendezina as filhas quando chamadas
     element: <AdminPage />,
     children: [ //contém as paginas filhas
+      {
+        index: true, //mantem na pagina pai, mas rendenizando o componente abaixo
+        element: <AnimaisPage modo="admin" />
+      },
       {
         path: "cadastrar-animal",
         element: <CadastroAnimal />
