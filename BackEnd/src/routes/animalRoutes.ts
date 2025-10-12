@@ -5,7 +5,7 @@ import {
     criarAnimal,
     deletarAnimal,
     atualizarAnimal
-} from '../controllers/AnimalController.js';
+} from '../controllers/animalController.js';
 import { upload } from '../config/multer.js'
 
 const router = Router();
