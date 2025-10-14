@@ -2,19 +2,23 @@ import { useState, useEffect } from "react";
 import Button from "../components/Button";
 import { Edit, Eye } from "lucide-react";
 
-function AnimaisPage({ modo = "adotante" }) {
+function AnimaisPage({ modo = "adotante" }) 
+{
     const [animais, setAnimais] = useState([]);
     const [selectedAnimal, setSelectedAnimal] = useState(null);
 
     useEffect(() => {
         const fetchAnimais = async () => {
-        try {
-            const response = await fetch("http://localhost:3000/animais/");
-            const data = await response.json();
-            setAnimais(data);
-        } catch (err) {
-            console.log("Erro ao buscar animais:", err);
-        }
+            try 
+            {
+                const response = await fetch("http://localhost:3000/animais/");
+                const data = await response.json();
+                setAnimais(data);
+            } 
+            catch(err) 
+            {
+                console.log("Erro ao buscar animais:", err);
+            }
         };
         fetchAnimais();
     }, []);
@@ -32,7 +36,7 @@ function AnimaisPage({ modo = "adotante" }) {
                 className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-200 overflow-hidden flex flex-col"
             >
                 <img
-                src={animal.foto_url || "/placeholder.jpg"}
+                src={`http://localhost:3000/uploads/${animal.foto_url}`}
                 alt={animal.nome}
                 className="w-full h-52 object-cover"
                 />
