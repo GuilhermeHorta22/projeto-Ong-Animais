@@ -1,7 +1,7 @@
-function Label ({ children, ...props })
+function Label ({ children, className = "", ...props})
 {
     return(
-        <label {...props} className="block text-stone-50 font-medium mb-2 select-none" >
+        <label {...props} className={`block  font-medium mb-0 select-none ${className || "text-stone-50"}`} >
             {children}
         </label>
     );

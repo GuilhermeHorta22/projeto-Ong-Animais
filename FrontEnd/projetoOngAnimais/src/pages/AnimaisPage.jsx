@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import Button from "../components/Button";
 import { Edit, Eye } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function AnimaisPage({ modo = "adotante" }) 
 {
     const [animais, setAnimais] = useState([]);
     const [selectedAnimal, setSelectedAnimal] = useState(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchAnimais = async () => {
@@ -59,7 +62,9 @@ function AnimaisPage({ modo = "adotante" })
                             </div>
 
                             <div className="mt-4 flex gap-2">
-                                <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition">
+                                <button 
+                                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition"
+                                    onClick={() => navigate(`/admin/editar-animal/${animal.id}`)}>
                                     Editar
                                 </button>
                                 <button 
@@ -76,7 +81,7 @@ function AnimaisPage({ modo = "adotante" })
 
 
         {selectedAnimal && (
-            <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
+            <div className="fixed inset-0 bg-stone-300 bg-opacity-60 flex justify-center items-center z-50">
                 <div className="bg-white rounded-xl shadow-xl p-8 w-full max-w-lg relative">
                     <button
                     onClick={() => setSelectedAnimal(null)}
@@ -86,9 +91,9 @@ function AnimaisPage({ modo = "adotante" })
                     </button>
 
                     <img
-                    src={`http://localhost:3000/uploads/${selectedAnimal.foto_url}`}
-                    alt={selectedAnimal.nome}
-                    className="w-full h-64 object-cover rounded-lg mb-4"
+                        src={`http://localhost:3000/uploads/${selectedAnimal.foto_url}`}
+                        alt={selectedAnimal.nome}
+                        className="w-full max-h-[70vh] object-contain rounded-lg mb-4"
                     />
 
                     <h2 className="text-2xl font-bold text-slate-800 mb-2">{selectedAnimal.nome}</h2>
