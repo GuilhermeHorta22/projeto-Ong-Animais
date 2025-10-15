@@ -16,11 +16,16 @@ function AnimaisPage({ modo = "adotante" })
             {
                 const response = await fetch("http://localhost:3000/animais/");
                 const data = await response.json();
-                setAnimais(data);
+
+                if(Array.isArray(data))
+                    setAnimais(data);
+                else
+                    setAnimais([]); //se caso não tiver animais ele deixar um array vazio
             } 
             catch(err) 
             {
                 console.log("Erro ao buscar animais:", err);
+                setAnimais([]); //para evitar erros se o banco for vazio
             }
         };
         fetchAnimais();

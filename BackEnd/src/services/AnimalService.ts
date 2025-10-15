@@ -43,7 +43,7 @@ export class AnimalService {
 
     async atualizar(id: number, animal: Omit<Animal, 'id'>): Promise<Animal> { //atualiza o resgistro de um animal
         const result = await pool.query(
-            'UPDATE animal SET nome = $1, especie = $2, raca = $3, idade = $4, porte = $5, descricao = $6, status = $7, foto_url = $8 RETURNING *',
+            'UPDATE animal SET nome = $1, especie = $2, raca = $3, idade = $4, porte = $5, descricao = $6, status = $7, foto_url = $8 WHERE id = $9 RETURNING *',
             [
                 animal.nome,
                 animal.especie,
@@ -52,7 +52,8 @@ export class AnimalService {
                 animal.porte,
                 animal.descricao,
                 animal.status,
-                animal.foto_url
+                animal.foto_url,
+                id
             ]
         );
         return result.rows[0];
