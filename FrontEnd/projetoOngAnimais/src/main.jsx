@@ -7,7 +7,6 @@ import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import AdotantePage from './pages/AdotantePage.jsx';
 import AdminPage from './pages/AdminPage.jsx';
-import AnimaisRelatorio from './pages/AnimaisRelatorio.jsx';
 import UsuariosRelatorio from './pages/UsuariosRelatorio.jsx';
 import CadastroAnimal from './pages/CadastroAnimal.jsx';
 import AnimaisPage from './pages/AnimaisPage.jsx';
@@ -43,10 +42,6 @@ const router = createBrowserRouter([
       {
         path: "cadastrar-animal",
         element: <CadastroAnimal />
-      },
-      {
-        path: "animais",
-        element: <AnimaisRelatorio />
       },
       {
         path: "usuarios",

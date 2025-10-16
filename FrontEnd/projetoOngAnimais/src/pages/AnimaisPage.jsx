@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import Button from "../components/Button";
-import { Edit, Eye } from "lucide-react";
+import { Edit, Eye, TrashIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 function AnimaisPage({ modo = "adotante" }) 
 {
     const [animais, setAnimais] = useState([]);
     const [selectedAnimal, setSelectedAnimal] = useState(null);
+    const [error, setError] = useState(""); //se eu fazer a mensagem de confirmação para deletar eu uso
+    const [success, setSuccess] = useState("");
 
     const navigate = useNavigate();
 
@@ -30,6 +32,30 @@ function AnimaisPage({ modo = "adotante" })
         };
         fetchAnimais();
     }, []);
+
+    async function deleteAnimal(animalId) //tem que ser async para aceitar o await
+    {
+        try
+        {
+            const response = await fetch(`http://localhost:3000/animais/${animalId}`,{
+                method: 'DELETE',
+            });
+
+            const data = await response.json(); //se for ter a confirmação vou usar
+
+            if(!response.ok)
+            {
+                alert("Erro ao deletar animal.");
+                return;
+            }
+
+            window.location.reload();
+        }
+        catch(err)
+        {
+            console.log("Erro ao excluir animal: ", err);
+        }
+    }
 
     return (
         <div className="p-8 bg-stone-100 min-h-screen">
@@ -64,6 +90,10 @@ function AnimaisPage({ modo = "adotante" })
                                 >
                                     {animal.status}
                                 </p>
+
+                                <button onClick={() => deleteAnimal(animal.id)}>
+                                    <TrashIcon/>
+                                </button>
                             </div>
 
                             <div className="mt-4 flex gap-2">
