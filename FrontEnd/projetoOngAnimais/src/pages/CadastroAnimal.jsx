@@ -3,9 +3,12 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import Select from "../components/Select";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CadastroAnimal ()
 {
+    const navigate = useNavigate();
+
     const [nome, setNome] = useState("");
     const [especie, setEspecie] = useState("");
     const [raca, setRaca] = useState("");
@@ -55,8 +58,6 @@ function CadastroAnimal ()
                 return;
             }
 
-            setSuccess("Animal cadastrado com sucesso!");
-
             //limpando os campos
             setNome("");
             setEspecie("");
@@ -66,6 +67,9 @@ function CadastroAnimal ()
             setPorte("");
             setStatus("");
             setFoto(null);
+
+            setSuccess("Animal cadastrado com sucesso!");
+            setTimeout(() => navigate("/admin"), 2500); //volta para a pagina de animais de 2,5 seg
         }
         catch(error)
         {

@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import Label from "./Label";
-import { Home, PawPrint, User, FileText } from "lucide-react";
+import { Home, PawPrint, User } from "lucide-react";
 
 function Sidebar()
 {
@@ -10,7 +10,6 @@ function Sidebar()
         { label: "home", path:"/admin", icon: <Home size={20} />},
         { label: "Cadastrar Animais", path:"/admin/cadastrar-animal", icon: <PawPrint size={20} />},
         { label: "Relatório de Usuários", path:"/admin/usuarios", icon: <User size={20} />},
-        { label: "Relatório de Animais", path:"/admin/animais", icon: <FileText size={20} />},
     ];
 
     return(
