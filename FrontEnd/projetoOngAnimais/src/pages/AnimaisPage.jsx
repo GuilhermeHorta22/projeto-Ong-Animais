@@ -7,8 +7,8 @@ function AnimaisPage({ modo = "adotante" })
 {
     const [animais, setAnimais] = useState([]);
     const [selectedAnimal, setSelectedAnimal] = useState(null);
-    const [error, setError] = useState(""); //se eu fazer a mensagem de confirmação para deletar eu uso
-    const [success, setSuccess] = useState("");
+    const [modalAberto, setModalAberto] = useState(false);
+    const [animalParaExcluir, setAnimalParaExcluir] = useState(null);
 
     const navigate = useNavigate();
 
@@ -41,15 +41,15 @@ function AnimaisPage({ modo = "adotante" })
                 method: 'DELETE',
             });
 
-            const data = await response.json(); //se for ter a confirmação vou usar
-
             if(!response.ok)
             {
-                alert("Erro ao deletar animal.");
+                alert("Erro ao deletar animal."); //por enquanto vamos manter assim, depois usamos os estados
                 return;
             }
 
-            window.location.reload();
+            setAnimais(animais.filter(a => a.id !== animalId));
+            setModalAberto(false);
+            setAnimalParaExcluir(null);
         }
         catch(err)
         {
@@ -79,7 +79,15 @@ function AnimaisPage({ modo = "adotante" })
 
                         <div className="flex flex-col justify-between flex-grow p-4">
                             <div>
-                                <h2 className="text-lg font-bold capitalize">{animal.nome}</h2>
+                                {/* titulo e lixeira juntos */}
+                                <div className="flex justify-between items-center">
+                                    <h2 className="text-lg font-bold capitalize">{animal.nome}</h2>
+                                    <button 
+                                        className="mt-2 text-red-600 hover:text-red-800" 
+                                        onClick={(event) => { event.stopPropagation(); setAnimalParaExcluir(animal); setModalAberto(true); }}>
+                                        <TrashIcon/>
+                                    </button>
+                                </div>   
                                 <p className="text-gray-600">{animal.especie} • {animal.raca}</p>
                                 <p className="text-gray-600">Idade: {animal.idade} anos</p>
                                 <p className="text-gray-600">Porte: {animal.porte}</p>
@@ -91,9 +99,7 @@ function AnimaisPage({ modo = "adotante" })
                                     {animal.status}
                                 </p>
 
-                                <button onClick={() => deleteAnimal(animal.id)}>
-                                    <TrashIcon/>
-                                </button>
+                               
                             </div>
 
                             <div className="mt-4 flex gap-2">
@@ -113,6 +119,29 @@ function AnimaisPage({ modo = "adotante" })
                 </div>
             ))}
         </div>
+
+        {/* criando meu modal de deletar animal */}
+        {modalAberto && animalParaExcluir && (
+            <div className="fixed inset-0 backdrop-blur-sm bg-white/10 flex justify-center items-center z-50">
+                <div className="bg-white p-6 rounded-xl shadow-lg text-center max-w-sm">
+                    <p className="mb-4 text-lg">
+                        Deseja confirmar a exclusão de <strong>{animalParaExcluir.nome}</strong> ?
+                    </p>
+                    <div className="flex justify-center gap-4">
+                        <Button 
+                            className="bg-green-700 hover:bg-green-700"
+                            onClick={() => deleteAnimal(animalParaExcluir.id)}
+                        > Confirmar</Button>
+
+                        <Button 
+                            className="bg-red-800 hover:bg-red-800"
+                            onClick={() => setModalAberto(false)}
+                        > Cancelar</Button>
+                    </div>
+                </div>
+
+            </div>
+        )}
 
 
         {selectedAnimal && (
