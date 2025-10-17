@@ -53,15 +53,16 @@ export const deletarAnimal = async(req: Request, res: Response) => {
 export const atualizarAnimal = async(req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     const {nome, especie, raca, idade, porte, descricao, status, foto_url} = req.body;
+    const idadeNumero = parseInt(idade);
 
     const result = await service.buscar(id);
 
     if(result != null)
     {
-        if(!nome || !especie || !porte || !status)
+        if(!nome || !especie || !raca || isNaN(idadeNumero) || !porte || !descricao || !status)
             return res.status(400).json({error: 'Dados obrigatório faltando.'});
             
-        const novoAnimal = await service.atualizar(id, {nome, especie, raca, idade, porte, descricao, status, foto_url});
+        const novoAnimal = await service.atualizar(id, {nome, especie, raca, idade: idadeNumero, porte, descricao, status, foto_url});
         return  res.json(novoAnimal);
     }
     else

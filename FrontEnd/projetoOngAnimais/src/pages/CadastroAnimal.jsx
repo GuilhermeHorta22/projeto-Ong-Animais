@@ -24,9 +24,20 @@ function CadastroAnimal ()
         setError("");
         setSuccess("");
 
-        if(!nome || !especie || !raca || !idade || !porte || !descricao || !status || !foto)
+        if(!nome || !especie || !raca || idade === "" || !porte || !descricao || !status || !foto)
         {
             setError("Preencha todos os campos!");
+            return;
+        }
+
+        if(isNaN(idade))
+        {
+            setError("O campo idade deve ser um número.");
+            return;
+        }
+        if(idade < 0 )
+        {
+            setError("O campo idade deve ser maior ou igual a 0.");
             return;
         }
 
