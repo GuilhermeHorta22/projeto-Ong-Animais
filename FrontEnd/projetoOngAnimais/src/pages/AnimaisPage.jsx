@@ -9,15 +9,43 @@ function AnimaisPage({ modo = "adotante" })
     const [selectedAnimal, setSelectedAnimal] = useState(null);
     const [modalAberto, setModalAberto] = useState(false);
     const [animalParaExcluir, setAnimalParaExcluir] = useState(null);
+    const [error, setError] = useState("");
 
     const navigate = useNavigate();
 
     useEffect(() => {
+        const token = localStorage.getItem("token");
+        const tipo = localStorage.getItem("tipo");
+
+        if(!token)
+        {
+            navigate("/");
+            return;
+        }
+
+        if(tipo !== "ADMIN" && tipo !== "ADOTANTE")
+        {
+            navigate("/");
+            return;
+        }
+
         const fetchAnimais = async () => {
             try 
             {
-                const response = await fetch("http://localhost:3000/animais/");
+                const response = await fetch("http://localhost:3000/animais/", {
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+
                 const data = await response.json();
+
+                if(!response.ok)
+                {
+                    setError(data.error || "Erro ao carregar animais.");
+                    return;
+                }
 
                 if(Array.isArray(data))
                     setAnimais(data);
@@ -31,7 +59,7 @@ function AnimaisPage({ modo = "adotante" })
             }
         };
         fetchAnimais();
-    }, []);
+    }, [navigate]);
 
     async function deleteAnimal(animalId) //tem que ser async para aceitar o await
     {

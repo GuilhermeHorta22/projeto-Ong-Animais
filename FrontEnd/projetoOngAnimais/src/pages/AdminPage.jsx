@@ -1,10 +1,18 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import { Edit3, Info } from 'lucide-react';
 import AnimaisPage from "./AnimaisPage";
+import { useAuthGuard } from "../validation/useAuthGuard";
+import { useState, useEffect } from "react";
 
 function AdminPage()
 {
+    const isAuthorized = useAuthGuard("ADMIN");
+
+    //se a pessoa nao tiver autorizacao mantem na pagina atual
+    if(isAuthorized === false)
+        return null;
+
     return (
         <div className="flex">
             <Sidebar />
