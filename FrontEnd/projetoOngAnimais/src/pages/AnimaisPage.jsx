@@ -74,7 +74,7 @@ function AnimaisPage({ modo = "adotante" })
                         <img
                             src={`http://localhost:3000/uploads/${animal.foto_url}`}
                             alt={animal.nome}
-                            className="w-full h-56 object-cover"
+                            className="w-full h-70 object-cover"
                         />
 
                         <div className="flex flex-col justify-between flex-grow p-4">
@@ -157,7 +157,7 @@ function AnimaisPage({ modo = "adotante" })
                     <img
                         src={`http://localhost:3000/uploads/${selectedAnimal.foto_url}`}
                         alt={selectedAnimal.nome}
-                        className="w-full max-h-[70vh] object-contain rounded-lg mb-4"
+                        className="w-[400px] h-[400px] object-cover rounded-xl shadow-lg mx-auto"
                     />
 
                     <h2 className="text-2xl font-bold text-slate-800 mb-2">{selectedAnimal.nome}</h2>
