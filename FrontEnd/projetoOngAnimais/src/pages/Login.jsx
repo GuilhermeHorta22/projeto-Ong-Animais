@@ -12,7 +12,8 @@ function Login()
     const [senha, setSenha] = useState("");
     const [error, setError] = useState("");
 
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault();
         try
         {
             const response = await fetch("http://localhost:3000/auth/login", {
@@ -52,37 +53,37 @@ function Login()
                 <h1 className="text-white text-2xl font-semibold text-center mb-6">
                     Login do Sistema
                 </h1>
+                <form onSubmit={handleLogin} className="space-y-4">
+                    <div>
+                        <Label>Email</Label>
+                        <Input
+                            type="text"
+                            placeholder="Digite seu E-mail"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
 
-                <div>
-                    <Label>Email</Label>
-                    <Input
-                        type="text"
-                        placeholder="Digite seu E-mail"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
+                    <div>
+                        <Label>Senha</Label>
+                        <Input
+                            type="password"
+                            placeholder="Digite sua senha"
+                            value={senha}
+                            onChange={(e) => setSenha(e.target.value)}
+                        />
+                    </div>
 
-                <div>
-                    <Label>Senha</Label>
-                    <Input
-                        type="password"
-                        placeholder="Digite sua senha"
-                        value={senha}
-                        onChange={(e) => setSenha(e.target.value)}
-                    />
-                </div>
-
-                <Button onClick={handleLogin()}>Entrar</Button>
-
-
+                    <Button onClick={handleLogin}>Entrar</Button>
+                </form>
+                
                 <div className="text-center text-stone-200 font-medium mt-4 select-none">
-                <p>
-                    Não tem conta?{" "}
-                    <Link to="/register" className="text-blue-400 hover:underline">
-                    Cadastre-se
-                    </Link>
-                </p>
+                    <p>
+                        Não tem conta?{" "}
+                        <Link to="/register" className="text-blue-400 hover:underline">
+                        Cadastre-se
+                        </Link>
+                    </p>
                 </div>
             </div>
         </div>
