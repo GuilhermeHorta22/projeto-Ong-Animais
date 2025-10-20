@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { UsuarioService } from '../services/UsuarioService.js';
-import  { cpfValidation, emailValidation }  from '../utils/UsuarioValidation.js';
+import { cpfValidation, emailValidation }  from '../utils/UsuarioValidation.js';
 
 const service = new UsuarioService();
 
@@ -52,7 +52,6 @@ export const deletarUsuario  = async (req: Request, res: Response) => {
     }
     else
         return res.status(200).json({message: 'Não existe um usuario com esse id.'});
-
 };
 
 export const atualizarUsuario = async(req: Request, res: Response) => {
