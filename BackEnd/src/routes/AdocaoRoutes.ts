@@ -6,13 +6,14 @@ import {
     deletarAdocao,
     atualizarAdocao
 } from '../controllers/AdocaoController.js';
+import { verificarToken, permitirTipos } from "../middleware/authMiddleware.js";
 
 const router = Router();
 
-router.get('/', listarAdocao);
-router.get('/:id', buscarAdocao);
-router.post('/', criarAdocao);
-router.delete('/:id', deletarAdocao);
-router.put('/:id', atualizarAdocao);
+router.get('/', verificarToken, permitirTipos("ADMIN", "ADOTANTE"), listarAdocao);
+router.get('/:id', verificarToken, permitirTipos("ADMIN", "ADOTANTE"), buscarAdocao);
+router.post('/', verificarToken, permitirTipos("ADMIN"), criarAdocao);
+router.delete('/:id', verificarToken, permitirTipos("ADMIN"), deletarAdocao);
+router.put('/:id', verificarToken, permitirTipos("ADMIN"), atualizarAdocao);
 
 export default router;
