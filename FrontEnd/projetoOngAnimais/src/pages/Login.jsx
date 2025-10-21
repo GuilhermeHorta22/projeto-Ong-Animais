@@ -48,7 +48,7 @@ function Login()
     };
 
     return (
-        <div className="w-screen h-screen bg-stone-200 flex justify-center items-center">
+        <div className="w-screen h-screen bg-slate-300 flex justify-center items-center">
             <div className="w-[400px] bg-slate-800 rounded-2xl shadow-xl p-8 space-y-6">
                 <h1 className="text-white text-2xl font-semibold text-center mb-6">
                     Login do Sistema

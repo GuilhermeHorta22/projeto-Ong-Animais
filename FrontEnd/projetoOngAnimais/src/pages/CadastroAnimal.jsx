@@ -20,6 +20,9 @@ function CadastroAnimal ()
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
+    const token = localStorage.getItem("token");
+    const tipo = localStorage.getItem("tipo");
+
     const handleCadastrarAnimal = async () => {
         setError("");
         setSuccess("");
@@ -58,6 +61,7 @@ function CadastroAnimal ()
                 body: formData,
                 headers: {
                     Accept: 'application/json',
+                    Authorization: `Bearer ${token}`
                 },
             });
 
@@ -90,108 +94,115 @@ function CadastroAnimal ()
     }
 
     return (
-        <div className="w-full max-w-md mx-auto mt-10 p-6 bg-slate-800 rounded-md">
-            <h1 className="text-white text-xl font-semibold text-center mb-4">Cadastro de Animal</h1>
+        <div className="p-8 bg-slate-300 min-h-screen flex justify-center items-center">
+            <form onSubmit={(e) => {
+                    e.preventDefault();
+                    handleCadastrarAnimal();
+                }}
+                className="bg-white rounded-xl shadow-xl p-8 w-full max-w-lg"
+            >
 
-            <div>
-                <Label>Nome</Label>
-                <Input
-                    type="text"
-                    placeholder="Nome do animal"
-                    value={nome}
-                    onChange={(e) => setNome(e.target.value)}
-                />
-            </div> <br />
             
-            <div>
-                <Label>Espécie</Label>
-                <Input 
-                    type="text"
-                    placeholder="Especie do animal"
-                    value={especie}
-                    onChange={(e) => setEspecie(e.target.value)}
-                />
-            </div> <br />
-            
-            <div>
-                <Label>Raça</Label>
-                <Input 
-                    type="text"
-                    placeholder="Raça do animal"
-                    value={raca}
-                    onChange={(e) => setRaca(e.target.value)}
-                />
-            </div> <br />
+                <h1 className="text-2xl font-bold text-slate-800 mb-4 text-center">Cadastro de Animal</h1>
 
-            <div>
-                <Label>Idade</Label>
-                <Input 
-                    type="number"
-                    placeholder="Idade do animal"
-                    value={idade}
-                    onChange={(e) => setIdade(parseInt(e.target.value))}
-                />
-            </div> <br />
-
-            <div>
-                <Label>Porte</Label>
-                <Input 
-                    type="text"
-                    placeholder="Porte do animal"
-                    value={porte}
-                    onChange={(e) => setPorte(e.target.value)}
-                />
-            </div> <br />
-
-            <div>
-                <Label>Descrição</Label>
-                <Input 
-                    type="text"
-                    placeholder="Descrição animal"
-                    value={descricao}
-                    onChange={(e) => setDescricao(e.target.value)}
-                />
-            </div> <br />
-
-            <div>
-                <Label>Status</Label>
-                <Select value={status} onChange={(e) => setStatus(e.target.value)}>
-                    <option value="">Selecione...</option>
-                    <option value="Disponível">Disponível</option>
-                    <option value="Indisponível">Indisponível</option>
-                </Select>
-            </div> <br />
-
-            <div>
-                <Label>Foto</Label>
-                <label
-                    htmlFor="foto"
-                    className="flex items-center justify-between bg-stone-100 rounded-md p-2 cursor-pointer hover:bg-stone-300 transition"
-                >
-                    <span className="text-slate-700 font-medium">
-                        {foto ? foto.name : "Escolher imagem..."}
-                    </span>
-
-                    <span className="bg-slate-600 text-white text-sm px-3 py-1 rounded-md cursor-pointer hover:bg-slate-700">
-                        Procurar
-                    </span>
-
-                    <input
-                        id="foto"
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={(e) => setFoto(e.target.files[0])}
+                <div className="flex flex-col gap-4">
+                    <Label className="text-slate-800">Nome</Label>
+                    <Input
+                        type="text"
+                        placeholder="Nome do animal"
+                        value={nome}
+                        onChange={(e) => setNome(e.target.value)}
+                        className="border border-slate-400 rounded-lg p-2"
                     />
-                </label>
-            </div> <br />
 
-            {error && <p className="text-red-500">{error}</p>}
-            {success && <p className="text-green-500 mb-2">{success}</p>}
+                    <Label className="text-slate-800">Espécie</Label>
+                    <Input 
+                        type="text"
+                        placeholder="Especie do animal"
+                        value={especie}
+                        onChange={(e) => setEspecie(e.target.value)}
+                        className="border border-slate-400 rounded-lg p-2"
+                    />
 
-            <div className="flex justify-center mt-4">
-                <Button onClick={handleCadastrarAnimal}>Cadastrar</Button>
-            </div>
+                    <Label className="text-slate-800">Raça</Label>
+                    <Input 
+                        type="text"
+                        placeholder="Raça do animal"
+                        value={raca}
+                        onChange={(e) => setRaca(e.target.value)}
+                        className="border border-slate-400 rounded-lg p-2"
+                    />
+
+                    <Label className="text-slate-800">Idade</Label>
+                    <Input 
+                        type="number"
+                        placeholder="Idade do animal"
+                        value={idade}
+                        onChange={(e) => setIdade(parseInt(e.target.value))}
+                        className="border border-slate-400 rounded-lg p-2"
+                    />
+
+                    <Label className="text-slate-800">Porte</Label>
+                    <Input 
+                        type="text"
+                        placeholder="Porte do animal"
+                        value={porte}
+                        onChange={(e) => setPorte(e.target.value)}
+                        className="border border-slate-400 rounded-lg p-2"
+                    />
+
+                    <Label className="text-slate-800">Descrição</Label>
+                    <textarea
+                        name="descricao"
+                        placeholder="Descrição animal"
+                        value={descricao}
+                        onChange={(e) => setDescricao(e.target.value)}
+                        className="border border-slate-400 rounded-lg p-2"
+                    />
+
+                    <Label className="text-slate-800">Status</Label>
+                    <Select value={status} onChange={(e) => setStatus(e.target.value)} className="border border-slate-400 rounded-lg p-2">
+                        <option value="">Selecione...</option>
+                        <option value="Disponível">Disponível</option>
+                        <option value="Indisponível">Indisponível</option>
+                    </Select>
+
+                    <Label className="text-slate-800">Foto</Label>
+                    <label
+                        htmlFor="foto"
+                        className="flex items-center  justify-between bg-stone-100 rounded-md p-2 cursor-pointer hover:bg-slate-300 transition border border-slate-400"
+                    >
+                        <span className="text-slate-700 font-medium ">
+                            {foto ? foto.name : "Escolher imagem..."}
+                        </span>
+
+                        <span className="bg-slate-500 text-white text-sm px-3 py-1 rounded-md cursor-pointer hover:bg-slate-700">
+                            Procurar
+                        </span>
+
+                        <input
+                            id="foto"
+                            type="file"
+                            accept="image/*"
+                            className="hidden border-slate-800"
+                            onChange={(e) => setFoto(e.target.files[0])}
+                        />
+                    </label>
+
+                    {error && <p className="text-red-500">{error}</p>}
+                    {success && <p className="text-green-500 mb-2">{success}</p>}
+
+                    <div className="flex justify-center gap-4 mt-4">
+                        <Button onClick={handleCadastrarAnimal}>Cadastrar</Button>
+                        <Button 
+                            onClick={() => navigate("/admin")}
+                            className="bg-red-600 hover:bg-red-800 text-white rounded-lg px-4 py-2"
+                        >
+                            Cancelar
+                        </Button>
+                    </div>
+                </div>
+            </form>
         </div>
     );
 }

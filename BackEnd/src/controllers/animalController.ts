@@ -29,11 +29,12 @@ export const buscarAnimal = async (req: Request, res: Response) => {
 export const criarAnimal = async (req: Request, res: Response) => {
     const foto_url = req.file?.filename;
     const {nome, especie, raca, idade, porte, descricao, status} = req.body;
+    const idadeNumero = parseInt(idade);
 
-    if(!nome || !especie || !porte || !status)
+    if(!nome || !especie || !raca || isNaN(idadeNumero) || !porte || !descricao || !status)
         return res.status(400).json({error: 'Dados obigatorio faltando'});
 
-    const novoAnimal =  await service.criar({nome, especie, raca, idade, porte, descricao, status, foto_url});
+    const novoAnimal =  await service.criar({nome, especie, raca, idade: idadeNumero, porte, descricao, status, foto_url});
     return res.status(201).json(novoAnimal);
 };
 

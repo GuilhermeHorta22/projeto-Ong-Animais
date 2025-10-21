@@ -64,12 +64,12 @@ function EditarAnimal()
     };
 
     return (
-        <div className="p-8 bg-stone-100 min-h-screen flex justify-center items-center">
+        <div className="p-8 bg-slate-300 min-h-screen flex justify-center items-center">
             <form
                 onSubmit={handleSubmit}
                 className="bg-white rounded-xl shadow-xl p-8 w-full max-w-lg"
             >
-                <h1 className="text-2xl font-bold text-slate-800 mb-4">
+                <h1 className="text-2xl font-bold text-slate-800 mb-4 text-center">
                     Editar Animal
                 </h1>
 

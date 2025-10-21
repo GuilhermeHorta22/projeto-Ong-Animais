@@ -86,7 +86,7 @@ function AnimaisPage({ modo = "adotante" })
     }
 
     return (
-        <div className="p-8 bg-stone-100 min-h-screen">
+        <div className="p-8 bg-slate-300 min-h-screen">
             <h1 className="text-3xl font-bold text-slate-800 mb-8 text-center">
                 {modo === "admin" ? "Gerenciamento de Animais" : "Animais Disponíveis para Adoção"}
             </h1>
@@ -173,7 +173,7 @@ function AnimaisPage({ modo = "adotante" })
 
 
         {selectedAnimal && (
-            <div className="fixed inset-0 bg-stone-300 bg-opacity-60 flex justify-center items-center z-50">
+            <div className="fixed inset-0 bg-slate-300 bg-opacity-60 flex justify-center items-center z-50">
                 <div className="bg-white rounded-xl shadow-xl p-8 w-full max-w-lg relative">
                     <button
                     onClick={() => setSelectedAnimal(null)}
