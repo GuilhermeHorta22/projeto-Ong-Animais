@@ -11,6 +11,8 @@ import UsuariosRelatorio from './pages/UsuariosRelatorio.jsx';
 import CadastroAnimal from './pages/CadastroAnimal.jsx';
 import AnimaisPage from './pages/AnimaisPage.jsx';
 import EditarAnimal from './pages/EditarAnimal.jsx';
+import RegistrarAdocao from './pages/RegistrarAdocao.jsx';
+import AdocaoRelatorio from './pages/AdocaoRelatorio.jsx';
 
 
 //vou criar minhas routes para as pages
@@ -44,8 +46,16 @@ const router = createBrowserRouter([
         element: <CadastroAnimal />
       },
       {
+        path: "registrar-adocao",
+        element: <RegistrarAdocao />
+      },
+      {
         path: "usuarios",
         element: <UsuariosRelatorio />
+      },
+      {
+        path: "relatorio-adocao",
+        element: <AdocaoRelatorio />
       }
     ]
   }

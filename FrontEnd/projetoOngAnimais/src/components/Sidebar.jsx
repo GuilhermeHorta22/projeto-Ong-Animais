@@ -1,15 +1,17 @@
 import { Link, useLocation } from "react-router-dom";
 import Label from "./Label";
-import { Home, PawPrint, User } from "lucide-react";
+import { Home, PawPrint, User, Dog, FileSearch } from "lucide-react";
 
 function Sidebar()
 {
     const location = useLocation();
 
     const menuItems = [
-        { label: "home", path:"/admin", icon: <Home size={20} />},
-        { label: "Cadastrar Animais", path:"/admin/cadastrar-animal", icon: <PawPrint size={20} />},
-        { label: "Relatório de Usuários", path:"/admin/usuarios", icon: <User size={20} />},
+        { label: "home", path: "/admin", icon: <Home size={20} /> },
+        { label: "Cadastrar Animais", path: "/admin/cadastrar-animal", icon: <PawPrint size={20} /> },
+        { label: "Registrar Adoção", path: "/admin/registrar-adocao", icon: <Dog size={20} /> },
+        { label: "Relatório de Usuários", path: "/admin/usuarios", icon: <User size={20} /> },
+        { label: "Relatório de Adoções", path: "/admin/relatorio-adocao", icon: <FileSearch size={20} /> },
     ];
 
     return(
