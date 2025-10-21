@@ -8,9 +8,11 @@ import { useAuthGuard } from "../validation/useAuthGuard";
 
 function EditarAnimal()
 {
-     const { id } = useParams();
-     const navigate = useNavigate();
-     const [animal, setAnimal] = useState({
+    const [success, setSuccess] = useState("");
+    const [error, setError] = useState("");
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [animal, setAnimal] = useState({
         nome: "",
         especie: "",
         raca: "",
@@ -19,12 +21,12 @@ function EditarAnimal()
         descricao: "",
         status: "",
         foto: null,
-     });
+    });
 
-     //validacao do token e do tipo do usuario
-     const token = localStorage.getItem("token");
-     const isAuthorized = useAuthGuard("ADMIN");
-     if(isAuthorized === false)
+    //validacao do token e do tipo do usuario
+    const token = localStorage.getItem("token");
+    const isAuthorized = useAuthGuard("ADMIN");
+    if(isAuthorized === false)
         return null;
 
      useEffect(() => {
@@ -47,7 +49,7 @@ function EditarAnimal()
             }
         };
         fetchAnimal();
-     },[id]);
+    },[id]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -67,15 +69,20 @@ function EditarAnimal()
                 body: JSON.stringify(animal),
             });
 
+            const data = response.json();
             if(!response.ok)
-                alert("Erro ao atualizar os dados do animal!");
+            {
+                setError(data.error || "Erro ao atualizar os dados do animal.");
+                return;
+            }
 
-            alert("Dados do animal atualizado com sucesso!");
-            navigate("/admin");
+            setSuccess("Dados do animal atualizado com sucesso.");
+            setTimeout(() => navigate("/admin"), 2500);
         }
         catch(err)
         {
             console.log("Erro ao alterar dados: ",err);
+            setError("Erro de conexão com o servidor.");
         }
     };
 
@@ -160,7 +167,19 @@ function EditarAnimal()
                         <option value="Indisponível">Indisponível</option>
                     </Select>
 
-                    <Button onClick={handleSubmit}>Salvar</Button>
+                    { error && <p className="text-red-500">{error}</p> }
+                    { success && <p className="text-green-500">{success}</p> }
+
+                    <div className="flex justify-center gap-4 mt-4">
+                        <Button onClick={handleSubmit}>Salvar</Button>
+                        <Button
+                            onClick={() => navigate("/admin")}
+                            className="bg-red-600 hover:bg-red-800 text-white rounded-lg px-4 py-2"
+                        >
+                            Cancelar
+                        </Button>
+                    </div>
+                    
                 </div>
             </form>
         </div>
