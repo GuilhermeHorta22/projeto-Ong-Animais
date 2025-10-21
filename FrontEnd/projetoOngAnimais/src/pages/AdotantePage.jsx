@@ -5,7 +5,7 @@ function AdotantePage()
 
     return (
         <div>
-            <AnimaisPage modo="adotante" />
+            <AnimaisPage/>
         </div>
     );
 }

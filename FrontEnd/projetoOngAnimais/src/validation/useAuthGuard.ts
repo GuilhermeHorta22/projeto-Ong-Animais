@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const useAuthGuard = (tipoPermitido: "ADMIN" | "ADOTANTE") => {
+export const useAuthGuard = (...tiposPermitido: ("ADMIN" | "ADOTANTE")[]) => {
     const [isAuthorized, setIsAuthorized] = useState<boolean | undefined>(undefined);
     const navigate = useNavigate();
 
@@ -16,22 +16,14 @@ export const useAuthGuard = (tipoPermitido: "ADMIN" | "ADOTANTE") => {
             return;
         }
 
-        if(tipo !== "ADMIN" && tipo !== "ADOTANTE") 
+        if(!tiposPermitido.includes(tipo as "ADMIN" | "ADOTANTE")) 
         {
             setIsAuthorized(false);
             navigate("/");
             return;
         }
-
-        if(tipoPermitido !== tipo) 
-        {
-            setIsAuthorized(false);
-            navigate("/");
-            return;
-        }
-
         setIsAuthorized(true);
-    }, [tipoPermitido]);
+    }, [tiposPermitido, navigate]);
 
     return isAuthorized;
 };

@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import Button from "../components/Button";
 import { Edit, Eye, TrashIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuthGuard } from "../validation/useAuthGuard";
 
-function AnimaisPage({ modo = "adotante" }) 
+function AnimaisPage() 
 {
     const [animais, setAnimais] = useState([]);
     const [selectedAnimal, setSelectedAnimal] = useState(null);
@@ -13,22 +14,13 @@ function AnimaisPage({ modo = "adotante" })
 
     const navigate = useNavigate();
 
+    const token = localStorage.getItem("token");
+    const tipoUsuario = localStorage.getItem("tipo");
+    const isAuthorized = useAuthGuard("ADMIN", "ADOTANTE");
+    if(isAuthorized === false)
+        return null;
+
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        const tipo = localStorage.getItem("tipo");
-
-        if(!token)
-        {
-            navigate("/");
-            return;
-        }
-
-        if(tipo !== "ADMIN" && tipo !== "ADOTANTE")
-        {
-            navigate("/");
-            return;
-        }
-
         const fetchAnimais = async () => {
             try 
             {
@@ -67,11 +59,16 @@ function AnimaisPage({ modo = "adotante" })
         {
             const response = await fetch(`http://localhost:3000/animais/${animalId}`,{
                 method: 'DELETE',
+                headers: {
+                    Accept: 'application/json',
+                    Authorization: `Bearer ${token}`
+                }
             });
 
+            const data = await response.json();
             if(!response.ok)
             {
-                alert("Erro ao deletar animal."); //por enquanto vamos manter assim, depois usamos os estados
+                setError(data.error || "Erro ao deletar o animal.");
                 return;
             }
 
@@ -88,7 +85,7 @@ function AnimaisPage({ modo = "adotante" })
     return (
         <div className="p-8 bg-slate-300 min-h-screen">
             <h1 className="text-3xl font-bold text-slate-800 mb-8 text-center">
-                {modo === "admin" ? "Gerenciamento de Animais" : "Animais Disponíveis para Adoção"}
+                {tipoUsuario === "ADMIN" ? "Gerenciamento de Animais" : "Animais Disponíveis para Adoção"}
             </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -110,11 +107,16 @@ function AnimaisPage({ modo = "adotante" })
                                 {/* titulo e lixeira juntos */}
                                 <div className="flex justify-between items-center">
                                     <h2 className="text-lg font-bold capitalize">{animal.nome}</h2>
-                                    <button 
-                                        className="mt-2 text-red-600 hover:text-red-800" 
-                                        onClick={(event) => { event.stopPropagation(); setAnimalParaExcluir(animal); setModalAberto(true); }}>
-                                        <TrashIcon/>
-                                    </button>
+                                    {tipoUsuario === "ADMIN" &&(
+                                        <>
+                                            <button 
+                                                className="mt-2 text-red-600 hover:text-red-800" 
+                                                onClick={(event) => { event.stopPropagation(); setAnimalParaExcluir(animal); setModalAberto(true); }}>
+                                                <TrashIcon/>
+                                            </button>
+                                        </>
+                                    )}
+                                    
                                 </div>   
                                 <p className="text-gray-600">{animal.especie} • {animal.raca}</p>
                                 <p className="text-gray-600">Idade: {animal.idade} anos</p>
@@ -131,11 +133,14 @@ function AnimaisPage({ modo = "adotante" })
                             </div>
 
                             <div className="mt-4 flex gap-2">
-                                <button 
-                                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition"
-                                    onClick={() => navigate(`/admin/editar-animal/${animal.id}`)}>
-                                    Editar
-                                </button>
+                                {tipoUsuario === "ADMIN" && (
+                                    <button 
+                                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition"
+                                        onClick={() => navigate(`/admin/editar-animal/${animal.id}`)}>
+                                        Editar
+                                    </button>
+                                )}
+                                
                                 <button 
                                     className="flex-1 bg-gray-800 hover:bg-gray-900 text-white font-medium py-2 rounded-lg transition"
                                     onClick={() => setSelectedAnimal(animal)}>
@@ -155,7 +160,9 @@ function AnimaisPage({ modo = "adotante" })
                     <p className="mb-4 text-lg">
                         Deseja confirmar a exclusão de <strong>{animalParaExcluir.nome}</strong> ?
                     </p>
-                    <div className="flex justify-center gap-4">
+                    { error && <p className="text-red-500">{error}</p> }
+
+                    <div className="flex justify-center gap-4 py-5">
                         <Button 
                             className="bg-green-700 hover:bg-green-700"
                             onClick={() => deleteAnimal(animalParaExcluir.id)}
