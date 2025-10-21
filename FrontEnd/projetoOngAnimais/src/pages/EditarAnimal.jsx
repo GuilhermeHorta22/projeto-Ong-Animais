@@ -4,6 +4,7 @@ import Label from "../components/Label";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import Button from "../components/Button";
+import { useAuthGuard } from "../validation/useAuthGuard";
 
 function EditarAnimal()
 {
@@ -20,11 +21,23 @@ function EditarAnimal()
         foto: null,
      });
 
+     //validacao do token e do tipo do usuario
+     const token = localStorage.getItem("token");
+     const isAuthorized = useAuthGuard("ADMIN");
+     if(isAuthorized === false)
+        return null;
+
      useEffect(() => {
         const fetchAnimal = async () => {
             try
             {
-                const response = await fetch(`http://localhost:3000/animais/${id}`);
+                const response = await fetch(`http://localhost:3000/animais/${id}`, {
+                    method: 'GET',
+                    headers: {
+                        Accept: 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 const data = await response.json();
                 setAnimal(data);
             }
@@ -47,7 +60,10 @@ function EditarAnimal()
         {
             const response = await fetch(`http://localhost:3000/animais/${id}`, {
                 method: "PUT",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
                 body: JSON.stringify(animal),
             });
 

@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import Select from "../components/Select";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuthGuard } from "../validation/useAuthGuard";
 
 function CadastroAnimal ()
 {
@@ -21,7 +22,10 @@ function CadastroAnimal ()
     const [success, setSuccess] = useState("");
 
     const token = localStorage.getItem("token");
-    const tipo = localStorage.getItem("tipo");
+
+    const isAuthorized = useAuthGuard("ADMIN");
+    if(isAuthorized === false)
+        return null;
 
     const handleCadastrarAnimal = async () => {
         setError("");
