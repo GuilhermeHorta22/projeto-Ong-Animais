@@ -62,7 +62,7 @@ function Register()
 
      //renderizando a pagina de cadastro
      return (
-        <div className="w-screen h-screen bg-stone-200 flex justify-center items-center p-6">
+        <div className="w-screen h-screen bg-slate-300 flex justify-center items-center p-6">
             <div className="w-[450px] bg-slate-800 rounded-xl shadow-lg p-8 space-y-4">
                 <h1 className="text-white text-2xl font-semibold text-center mb-4">Cadastro de Usuário</h1>
 
