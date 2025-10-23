@@ -27,7 +27,13 @@ const router = createBrowserRouter([
   },
   {
     path: "/adotante",
-    element: <AdotantePage />
+    element: <AdotantePage />,
+    children: [
+      {
+        index: true,
+        element: <AnimaisPage />
+      }
+    ]
   },
   {
     path: "/admin", //pagina pai que rendezina as filhas quando chamadas
@@ -35,7 +41,7 @@ const router = createBrowserRouter([
     children: [ //contém as paginas filhas
       {
         index: true, //mantem na pagina pai, mas rendenizando o componente abaixo
-        element: <AnimaisPage modo="admin" />,
+        element: <AnimaisPage />,
       },
       {
         path: "editar-animal/:id",
