@@ -6,7 +6,9 @@ function Sidebar()
 {
     const location = useLocation();
 
-    const menuItems = [
+    const tipoUsuario = localStorage.getItem("tipo"); //admin
+
+    const menuItemsAdmin = [
         { label: "home", path: "/admin", icon: Home },
         { label: "Cadastrar Animais", path: "/admin/cadastrar-animal", icon: PawPrint },
         { label: "Registrar Adoção", path: "/admin/registrar-adocao", icon: Dog },
@@ -15,9 +17,18 @@ function Sidebar()
         { label: "Sair", path: "/", icon: LogOut, color: "#FF0000" },
     ];
 
+    const menuItemsAdotante = [
+        { label: "home", path: "/adotante", icon: Home },
+        { label: "Sair", path: "/", icon: LogOut, color: "#FF0000" },
+    ];
+
+    const menuItems = tipoUsuario === "ADMIN" ? menuItemsAdmin : menuItemsAdotante;
+
     return(
         <aside className="w-72 min-h-screen bg-slate-900 text-white flex flex-col p-6 shadow-lg">
-            <h2 className="text-2xl font-bold mb-8 text-center text-slate-200 tracking-wide">Painel Administrador</h2>
+            <h2 className="text-2xl font-bold mb-8 text-center text-slate-200 tracking-wide">
+                {tipoUsuario === "ADMIN" ? "Painel Administrador" : "Painel Adotante"}
+            </h2>
            
            <nav className="flex flex-col space-y-3 flex-grow overflow-y-auto">
                 {menuItems.map((item, index) => {
