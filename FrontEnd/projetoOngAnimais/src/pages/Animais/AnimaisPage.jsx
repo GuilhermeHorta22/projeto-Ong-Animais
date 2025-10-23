@@ -103,7 +103,7 @@ function AnimaisPage()
                     className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col"
                     style={{ minHeight: "430px" }} // garante altura mínima
                 >
-                    <div className="max-w-sm bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
+                    <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col">
                         <img
                             src={`http://localhost:3000/uploads/${animal.foto_url}`}
                             alt={animal.nome}
