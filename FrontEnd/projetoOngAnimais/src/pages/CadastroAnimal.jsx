@@ -197,7 +197,7 @@ function CadastroAnimal ()
                     {success && <p className="text-green-500 mb-2">{success}</p>}
 
                     <div className="flex justify-center gap-4 mt-4">
-                        <Button onClick={handleCadastrarAnimal}>Cadastrar</Button>
+                        <Button type="submit">Cadastrar</Button>
                         <Button 
                             onClick={() => navigate("/admin")}
                             className="bg-red-600 hover:bg-red-800 text-white rounded-lg px-4 py-2"
