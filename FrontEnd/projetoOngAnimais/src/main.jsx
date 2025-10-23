@@ -5,14 +5,14 @@ import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
-import AdotantePage from './pages/AdotantePage.jsx';
-import AdminPage from './pages/AdminPage.jsx';
-import UsuariosRelatorio from './pages/UsuariosRelatorio.jsx';
-import CadastroAnimal from './pages/CadastroAnimal.jsx';
-import AnimaisPage from './pages/AnimaisPage.jsx';
-import EditarAnimal from './pages/EditarAnimal.jsx';
-import RegistrarAdocao from './pages/RegistrarAdocao.jsx';
-import AdocaoRelatorio from './pages/AdocaoRelatorio.jsx';
+import AdotantePage from './pages/Usuarios/AdotantePage.jsx';
+import AdminPage from './pages/Usuarios/AdminPage.jsx';
+import UsuariosRelatorio from './pages/Usuarios/UsuariosRelatorio.jsx';
+import CadastroAnimal from './pages/Animais/CadastroAnimal.jsx';
+import AnimaisPage from './pages/Animais/AnimaisPage.jsx';
+import EditarAnimal from './pages/Animais/EditarAnimal.jsx';
+import RegistrarAdocao from './pages/Adocao/RegistrarAdocao.jsx';
+import AdocaoRelatorio from './pages/Adocao/AdocaoRelatorio.jsx';
 
 
 //vou criar minhas routes para as pages

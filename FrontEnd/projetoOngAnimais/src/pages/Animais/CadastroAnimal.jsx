@@ -1,10 +1,10 @@
-import Label from "../components/Label";
-import Input from "../components/Input";
-import Button from "../components/Button";
-import Select from "../components/Select";
+import Label from "../../components/Label";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
+import Select from "../../components/Select";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthGuard } from "../validation/useAuthGuard";
+import { useAuthGuard } from "../../validation/useAuthGuard";
 
 function CadastroAnimal ()
 {

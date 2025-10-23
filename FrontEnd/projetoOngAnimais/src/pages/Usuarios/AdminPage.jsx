@@ -1,8 +1,8 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../../components/Sidebar";
 import { Edit3, Info } from 'lucide-react';
-import AnimaisPage from "./AnimaisPage";
-import { useAuthGuard } from "../validation/useAuthGuard";
+import AnimaisPage from "../Animais/AnimaisPage";
+import { useAuthGuard } from "../../validation/useAuthGuard";
 import { useState, useEffect } from "react";
 
 function AdminPage()

@@ -1,4 +1,4 @@
-import AnimaisPage from "./AnimaisPage";
+import AnimaisPage from "../Animais/AnimaisPage";
 
 function AdotantePage()
 {

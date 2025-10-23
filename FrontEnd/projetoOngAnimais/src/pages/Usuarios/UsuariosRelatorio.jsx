@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import Button from "../components/Button";
+import Button from "../../components/Button";
 import { Trash, Pencil, Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import  { useAuthGuard } from "../validation/useAuthGuard";
+import  { useAuthGuard } from "../../validation/useAuthGuard";
 
 function usuariosRelatorio()
 {
