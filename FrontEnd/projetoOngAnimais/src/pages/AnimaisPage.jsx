@@ -55,6 +55,9 @@ function AnimaisPage()
 
     async function deleteAnimal(animalId) //tem que ser async para aceitar o await
     {
+        if(!animalId)
+            return;
+
         try
         {
             const response = await fetch(`http://localhost:3000/animais/${animalId}`,{
@@ -71,14 +74,16 @@ function AnimaisPage()
                 setError(data.error || "Erro ao deletar o animal.");
                 return;
             }
-
-            setAnimais(animais.filter(a => a.id !== animalId));
-            setModalAberto(false);
-            setAnimalParaExcluir(null);
         }
         catch(err)
         {
             console.log("Erro ao excluir animal: ", err);
+        }
+        finally
+        {
+            setAnimais(prevAnimais => prevAnimais.filter(animal => animal.id !== animalId));
+            setModalAberto(false);
+            setAnimalParaExcluir(null);
         }
     }
 
@@ -165,7 +170,7 @@ function AnimaisPage()
                     <div className="flex justify-center gap-4 py-5">
                         <Button 
                             className="bg-green-700 hover:bg-green-700"
-                            onClick={() => deleteAnimal(animalParaExcluir.id)}
+                            onClick={() => deleteAnimal(animalParaExcluir?.id)}
                         > Confirmar</Button>
 
                         <Button 
