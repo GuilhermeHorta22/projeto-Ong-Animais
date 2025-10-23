@@ -68,20 +68,23 @@ function AnimaisPage()
                 }
             });
 
-            const data = await response.json();
             if(!response.ok)
             {
-                setError(data.error || "Erro ao deletar o animal.");
+                const data = await response.json();
+                setError(data.message || "Erro ao deletar o animal.");
                 return;
             }
+
+            setAnimais(prevAnimais => prevAnimais.filter(animal => animal.id !== animalId));
+            setError("");
         }
         catch(err)
         {
             console.log("Erro ao excluir animal: ", err);
+            setError("Erro de rede ou conexão. Tente novamente.");
         }
         finally
         {
-            setAnimais(prevAnimais => prevAnimais.filter(animal => animal.id !== animalId));
             setModalAberto(false);
             setAnimalParaExcluir(null);
         }

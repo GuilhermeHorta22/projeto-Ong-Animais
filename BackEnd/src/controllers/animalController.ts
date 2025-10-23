@@ -48,7 +48,7 @@ export const deletarAnimal = async(req: Request, res: Response) => {
         return res.sendStatus(204);
     }
     else
-        return res.status(200).json({message: 'Não existe animal com esse ID!'});
+        return res.status(404).json({message: 'Não existe animal com esse ID!'});
 };
 
 export const atualizarAnimal = async(req: Request, res: Response) => {
