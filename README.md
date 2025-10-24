@@ -43,9 +43,10 @@ O sistema é dividido em:
 ## 🔁 Fluxo de Funcionamento
 
 ### Visitante
-1. Acessa a página inicial
-2. Visualiza os animais disponíveis
-3. Filtra por porte, espécie ou idade
+1. Fazer o cadastro e Login
+2. Acessa a página inicial
+3. Visualiza os animais disponíveis
+4. Filtra por porte, espécie ou idade
 
 ### Administrador
 1. Realiza login
