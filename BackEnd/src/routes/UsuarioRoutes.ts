@@ -12,7 +12,7 @@ const router = Router();
 
 router.get('/', verificarToken, permitirTipos("ADMIN"), listarUsuario);
 router.get('/:id',verificarToken, permitirTipos("ADMIN", "ADOTANTE"), buscarUsuario);
-router.post('/', verificarToken, permitirTipos("ADMIN"), criarUsuario);
+router.post('/', criarUsuario);
 router.delete('/:id', verificarToken, permitirTipos("ADMIN"), deletarUsuario);
 router.put('/:id', verificarToken, permitirTipos("ADMIN"), atualizarUsuario);
 
