@@ -57,7 +57,7 @@ function Sidebar()
            </nav>
 
            <footer className="pt-6 border-t border-slate-700 text-center text-sm text-slate-500 mt-6 sm:mt-auto">
-                © {new Date().getFullYear()} ONG ANIMAIS
+                Copyright © 2025 Ong Animais
            </footer>
         </aside>
     );
