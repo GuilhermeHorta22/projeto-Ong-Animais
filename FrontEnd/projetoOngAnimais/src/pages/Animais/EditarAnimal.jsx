@@ -4,7 +4,7 @@ import Label from "../../components/Label";
 import Input from "../../components/Input";
 import Select from "../../components/Select";
 import Button from "../../components/Button";
-import { useAuthGuard } from "../../validation/useAuthGuard";
+import { useAuthGuard } from "../../utils/validation/useAuthGuard";
 
 function EditarAnimal()
 {

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import AnimaisPage from "../Animais/AnimaisPage";
 import Sidebar from "../../components/Sidebar";
-import { useAuthGuard } from "../../validation/useAuthGuard";
+import { useAuthGuard } from "../../utils/validation/useAuthGuard";
 
 function AdotantePage()
 {
