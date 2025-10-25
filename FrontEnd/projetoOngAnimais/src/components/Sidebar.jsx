@@ -1,25 +1,29 @@
 import { Link, useLocation } from "react-router-dom";
 import Label from "./Label";
-import { Home, PawPrint, User, Dog, FileSearch, LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { authLogout } from "../utils/validation/authLogout";
+import { Home, PawPrint, User, Dog, FileSearch, LogOut, UserPlus } from "lucide-react";
 
 function Sidebar()
 {
     const location = useLocation();
+    const navigate = useNavigate();
 
     const tipoUsuario = localStorage.getItem("tipo"); //admin
 
     const menuItemsAdmin = [
         { label: "home", path: "/admin", icon: Home },
         { label: "Cadastrar Animais", path: "/admin/cadastrar-animal", icon: PawPrint },
+        { label: "Cadastrar Admin", path: "/register", icon: UserPlus },
         { label: "Registrar Adoção", path: "/admin/registrar-adocao", icon: Dog },
         { label: "Relatório de Usuários", path: "/admin/usuarios", icon: User },
         { label: "Relatório de Adoções", path: "/admin/relatorio-adocao", icon: FileSearch },
-        { label: "Sair", path: "/", icon: LogOut, color: "#FF0000" },
+        { label: "Sair", action: () => authLogout(navigate), icon: LogOut, color: "#FF0000" },
     ];
 
     const menuItemsAdotante = [
         { label: "home", path: "/adotante", icon: Home },
-        { label: "Sair", path: "/", icon: LogOut, color: "#FF0000" },
+        { label: "Sair", action: () => authLogout(navigate), icon: LogOut, color: "#FF0000" },
     ];
 
     const menuItems = tipoUsuario === "ADMIN" ? menuItemsAdmin : menuItemsAdotante;
@@ -36,6 +40,7 @@ function Sidebar()
                     return (
                         <Link
                             key={index}
+                            onClick={item.action}
                             to={item.path}
                             style={{ color: item.color || "" }}
                             className={`px-5 py-3 rounded-lg text-base font-medium transition-all duration-200 flex items-center gap-3
