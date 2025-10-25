@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import Button from "../../components/Button";
 import { Trash, Pencil, Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import  { useAuthGuard } from "../../validation/useAuthGuard";
+import  { useAuthGuard } from "../../utils/validation/useAuthGuard";
 import EditarUsuario from "./EditarUsuario";
+import { cpfFormatter } from "../../utils/formatters/cpfFormatter";
+import { telefoneFormatter } from "../../utils/formatters/telefoneFormatter";
 
 function usuariosRelatorio()
 {
@@ -79,11 +81,11 @@ function usuariosRelatorio()
                                 </td>
 
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                    {usuario.cpf}
+                                    {cpfFormatter(usuario.cpf)}
                                 </td>
 
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                    {usuario.telefone}
+                                    {telefoneFormatter(usuario.telefone)}
                                 </td>
 
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 capitalize">
