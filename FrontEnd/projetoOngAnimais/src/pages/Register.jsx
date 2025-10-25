@@ -3,8 +3,10 @@ import { useNavigate, Link } from "react-router-dom";
 import Label from "../components/Label";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import { formatCpf } from "../validation/cpf";
-import { formatTelefone } from "../validation/telefone";
+import Select from "../components/Select";
+import { cpfFormatter } from "../utils/formatters/cpfFormatter";
+import { telefoneFormatter } from "../utils/formatters/telefoneFormatter";
+import { CornerUpLeft } from "lucide-react";
 
 
 function Register()
@@ -17,17 +19,21 @@ function Register()
     const [endereco, setEndereco] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    const [tipo, setTipo] = useState("ADOTANTE");
+    const [tipo, setTipo] = useState("");
     const [error, setError] = useState("");
     const [sucess, setSucess] = useState("");
+
+    const tipoUsuario = localStorage.getItem("tipo");
 
     const handleRegister = async () => {
         setError("");
         setSucess("");
-        setTipo("");
+
+        //para ter o estado do nosso usuario
+        const tipoFinal = tipoUsuario === "ADMIN" ? "ADMIN" : "ADOTANTE";
 
         //validacao se o usuario preencheu todos os campos
-        if(!nome || !cpf || !telefone || !endereco || !email || !senha)
+        if(!nome || !cpf || !telefone || !endereco || !email || !senha || !tipoFinal)
         {
             setError("Por favor, preencha todos os campos.");
             return;
@@ -39,19 +45,28 @@ function Register()
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ nome, cpf, telefone, endereco, email, senha, tipo }),    
+                body: JSON.stringify({ nome, cpf, telefone, endereco, email, senha, tipo: tipoFinal }),    
             });
 
             const data = await response.json();
 
             if(!response.ok)
             {
-                setError(data.error || "Erro ao cadastrar usuário.");
+                if(data.error)
+                    setError(data.error);
+                else 
+                if(data.message)
+                    setError(data.message);
+                else
+                    setError("Erro ao cadastrar usuário.");
                 return;
             }
 
             setSucess("Usuário cadastrado com sucesso!");
-            setTimeout(() => navigate("/"), 2000); //redireciona para a tela de login apos 2seg
+            if(tipoUsuario === "ADMIN")
+                setTimeout(() => navigate("/admin"), 2000);
+            else
+                setTimeout(() => navigate("/"), 2000);//redireciona para a tela de login apos 2seg 
         }
         catch(error)
         {
@@ -64,7 +79,20 @@ function Register()
      return (
         <div className="w-screen h-screen bg-slate-300 flex justify-center items-center p-6">
             <div className="w-[450px] bg-slate-800 rounded-xl shadow-lg p-8 space-y-4">
-                <h1 className="text-white text-2xl font-semibold text-center mb-4">Cadastro de Usuário</h1>
+                <div className="flex items-center justify-between mb-4">
+                    {tipoUsuario === "ADMIN" && (
+                        <button 
+                            onClick={() => navigate("/admin")}
+                            className="text-white hover:text-blue-400 transition-colors"
+                        >
+                            <CornerUpLeft size={24} />
+                        </button>
+                    )}
+                    <h1 className="text-white text-2xl font-semibold flex-1 text-center">
+                        Cadastro de Usuário
+                    </h1>
+                    <div className="w-6"></div> {/* Espaçador para manter o título centralizado */}
+                </div>
 
                 <div>
                     <Label>Nome</Label>
@@ -82,7 +110,7 @@ function Register()
                     type="text"
                     placeholder="Digite seu CPF"
                     value={cpf}
-                    onChange={(e) => setCpf(formatCpf(e.target.value))}
+                    onChange={(e) => setCpf(cpfFormatter(e.target.value))}
                     />
                 </div>
 
@@ -92,7 +120,8 @@ function Register()
                     type="text"
                     placeholder="Digite seu telefone"
                     value={telefone}
-                    onChange={(e) => setTelefone(formatTelefone(e.target.value))}
+                    maxLength={15}
+                    onChange={(e) => setTelefone(telefoneFormatter(e.target.value))}
                     />
                 </div>
 
@@ -116,6 +145,18 @@ function Register()
                     />
                 </div>
 
+                {tipoUsuario === "ADMIN" && (
+                    <div>
+                        <Label>Tipo</Label>
+                        <Select
+                            value={tipo}
+                            onChange={(e) => setTipo(e.target.value)}
+                        >
+                            <option value="ADMIN">Admin</option>
+                        </Select>
+                    </div>  
+                )}
+
                 <div>
                     <Label>Senha</Label>
                     <Input
@@ -133,14 +174,16 @@ function Register()
                     <Button onClick={handleRegister}>Cadastrar</Button>
                 </div>
 
-                <div className="text-center text-stone-50 mt-4">
-                    <p>
-                        Já tem conta?{" "}
-                        <Link to="/" className="text-blue-400 underline">
-                            Fazer Login
-                        </Link>
-                    </p>
-                </div>
+                {tipoUsuario !== "ADMIN" && (
+                    <div className="text-center text-stone-50 mt-4">
+                        <p>
+                            Já tem conta?{" "}
+                            <Link to="/" className="text-blue-400 underline">
+                                Fazer Login
+                            </Link>
+                        </p>
+                    </div>
+                )}
             </div>
         </div>
      );
