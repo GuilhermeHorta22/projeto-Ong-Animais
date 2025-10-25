@@ -28,7 +28,13 @@ function Login()
 
             if(!response.ok)
             {
-                setError(data.error || "Erro ao efetuar login.");
+                if(data.error)
+                    setError(data.error);
+                else
+                if(data.message)
+                    setError(data.message);
+                else
+                    setError("Erro ao fazer login.");
                 return;
             }
 
@@ -74,6 +80,7 @@ function Login()
                         />
                     </div>
 
+                    {error && (<p className="text-red-500 text-center">{error}</p>)}
                     <Button onClick={handleLogin}>Entrar</Button>
                 </form>
                 
