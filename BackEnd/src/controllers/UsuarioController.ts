@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { UsuarioService } from '../services/UsuarioService.js';
-import { cpfValidation, emailValidation }  from '../utils/UsuarioValidation.js';
+import { cpfValidation, telefoneValidation, emailValidation }  from '../utils/UsuarioValidation.js';
 
 const service = new UsuarioService();
 
@@ -32,12 +32,17 @@ export const criarUsuario = async (req: Request, res: Response) => {
     if(!nome || !cpf || !telefone || !endereco || !email || !senha || !tipo)
         return res.status(400).json({error: 'Dados obrigatorio faltando.'});
 
-    if(cpfValidation(cpf) === false)
+    const cpfValido = cpfValidation(cpf);
+    const telefoneValido = telefoneValidation(telefone);
+
+    if(cpfValido === null)
         return res.status(409).json({error: 'CPF inválido.'})
+    if(telefoneValido === null)
+        return res.status(409).json({error: 'Telefone inválido.'});
     if(emailValidation(email) === false)
         return res.status(409).json({error: 'Email inválido.'})
 
-    const novoUsuario = await service.criar({nome, cpf, telefone, endereco, email, senha, tipo});
+    const novoUsuario = await service.criar({nome, cpf:cpfValido, telefone:telefoneValido, endereco, email, senha, tipo});
     return res.json(novoUsuario);
 };
 
@@ -65,12 +70,17 @@ export const atualizarUsuario = async(req: Request, res: Response) => {
         if(!nome || !cpf || !telefone || !endereco || !email || !senha || !tipo)
             return res.status(400).json({error: 'Dados obrigatório faltando.'});
 
-        if(cpfValidation(cpf) === false)
+        const cpfValido = cpfValidation(cpf);
+        const telefoneValido = telefoneValidation(telefone);
+
+        if(cpfValido === null)
             return res.status(409).json({error: 'CPF inválido.'});
+        if(telefoneValido === null)
+            return res.status(409).json({error: 'Telefone inválido.'});
         if(emailValidation(email) === false)
             return res.status(409).json({error: 'Email inválido.'});
 
-        const novoUsuario = await service.alterar(id, {nome, cpf, telefone, endereco, email, senha, tipo});
+        const novoUsuario = await service.alterar(id, {nome, cpf:cpfValido, telefone:telefoneValido, endereco, email, senha, tipo});
         return res.json(novoUsuario);
     }
     else
