@@ -3,6 +3,7 @@ import Button from "../../components/Button";
 import { Trash, Pencil, Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import  { useAuthGuard } from "../../validation/useAuthGuard";
+import EditarUsuario from "./EditarUsuario";
 
 function usuariosRelatorio()
 {
@@ -20,13 +21,111 @@ function usuariosRelatorio()
     if(isAuthorized === false)
         return null;
 
-    
+    useEffect(() => {
+        const fetchUsuarios = async () => {
+            try
+            {
+                const response = await fetch('http://localhost:3000/usuarios/', {
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                const data = await response.json();
+                if(!response.ok)
+                {
+                    setError(data.error || "Erro ao carregar os usuários.");
+                    return;
+                }
+
+                if(Array.isArray(data))
+                    setUsuarios(data);
+                else
+                    setUsuarios([]);
+            }
+            catch(err)
+            {
+                setError("Erro ao listar animais: ", err);
+                setAnimais([]);
+            }
+        };
+        fetchUsuarios();
+    }, [navigate]);
 
     return(
-        <div>
-            <h1>
-                Relatorio de Usuarios
+        <div className="p-8 bg-slate-300 min-h-screen">
+            <h1 className="text-3xl font-bold text-slate-800 mb-8 text-center">
+                Relatório De Usuários
             </h1>
+
+            <div className="overflow-x-auto bg-white rounded-xl shadow-lg">
+                <table className="min-w-full divide-y divide-gray-900">
+                    <thead className="bg-gray-50">
+                        <tr>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Nome</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">CPF</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Telefone</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Tipo</th>
+                            <th className="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase tracking-wider">Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody className="bg-white divide-y divide-gray-300">
+                        {usuarios.map((usuario) => (
+                            <tr key={usuario.id} className="hover:bg-gray-50">
+                                <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900 capitalize">
+                                    {usuario.nome}
+                                </td>
+
+                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                    {usuario.cpf}
+                                </td>
+
+                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                    {usuario.telefone}
+                                </td>
+
+                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 capitalize">
+                                    {usuario.tipo === "ADMIN" ? "Administrador" : "Adotante"}
+                                </td>
+
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-center font-medium">
+                                    <button
+                                        title="Visualizar detalhes do usuário"
+                                        onClick={() => setSelectedUsuario()}
+                                        className="text-blue-600 hover:text-blue-900 mx-1 px-1"
+                                    >
+                                        <Eye size={25} />
+                                    </button>
+
+                                    <button
+                                        title="Editar usuário"
+                                        onClick={() => navigate(`/admin/editar-usuario/${usuario.id}`)}
+                                        className="text-yellow-600 hover:text-yellow-900 mx-1 px-1"
+                                    >
+                                        <Pencil size={25} />
+                                    </button>
+
+                                    <button 
+                                        title="Excluir usuário"
+                                        onClick={() => {setUsuarioParaExcluir(usuario); setModalAberto(true);} }
+                                        className="text-red-600 hover:text-red-900 mx-1 px-1"
+                                    >
+                                        <Trash size={25} />
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                
+                {usuarios.length === 0 && (
+                    <p className="p-6 text-center text-gray-500">Nenhum usuário encontrado.</p>
+                )}
+            </div>
+
+            {/* aqui eu vou adicionar meu modal para exclusão e detalhes do usuario */}
         </div>
     );
 }
