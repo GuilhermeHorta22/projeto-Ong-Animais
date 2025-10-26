@@ -59,7 +59,9 @@ function Login()
                 <h1 className="text-white text-2xl font-semibold text-center mb-6">
                     Login do Sistema
                 </h1>
-                <form onSubmit={handleLogin} className="space-y-4">
+                <form onSubmit={(e) => {
+                    e.preventDefault();
+                    handleLogin(e);}} className="space-y-4">
                     <div>
                         <Label>Email</Label>
                         <Input
@@ -81,7 +83,7 @@ function Login()
                     </div>
 
                     {error && (<p className="text-red-500 text-center">{error}</p>)}
-                    <Button onClick={handleLogin}>Entrar</Button>
+                    <Button type="submit">Entrar</Button>
                 </form>
                 
                 <div className="text-center text-stone-200 font-medium mt-4 select-none">
