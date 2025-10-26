@@ -27,7 +27,8 @@ function CadastroAnimal ()
     if(isAuthorized === false)
         return null;
 
-    const handleCadastrarAnimal = async () => {
+    const handleCadastrarAnimal = async (e) => {
+        e.preventDefault();
         setError("");
         setSuccess("");
 
@@ -73,7 +74,13 @@ function CadastroAnimal ()
 
             if(!response.ok)
             {
-                setError(data.error || "Erro ao cadastrar o animal.");
+                if(data.error)
+                    setError(data.error);
+                else
+                if(data.message)
+                    setError(data.message);
+                else
+                    setError("Erro ao cadastrar o animal.");
                 return;
             }
 
@@ -105,8 +112,6 @@ function CadastroAnimal ()
                 }}
                 className="bg-white rounded-xl shadow-xl p-8 w-full max-w-lg"
             >
-
-            
                 <h1 className="text-2xl font-bold text-slate-800 mb-4 text-center">Cadastro de Animal</h1>
 
                 <div className="flex flex-col gap-4">
