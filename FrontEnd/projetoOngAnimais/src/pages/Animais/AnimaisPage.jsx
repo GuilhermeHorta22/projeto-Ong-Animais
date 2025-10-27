@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Button from "../../components/Button";
+import ModalDelete from "../../components/ModalDelete";
 import { TrashIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuthGuard } from "../../utils/validation/useAuthGuard";
@@ -162,30 +163,13 @@ function AnimaisPage()
         </div>
 
         {/* criando meu modal de deletar animal */}
-        {modalAberto && animalParaExcluir && (
-            <div className="fixed inset-0 backdrop-blur-sm bg-white/10 flex justify-center items-center z-50">
-                <div className="bg-white p-6 rounded-xl shadow-lg text-center max-w-sm">
-                    <p className="mb-4 text-lg">
-                        Deseja confirmar a exclusão de <strong>{animalParaExcluir.nome}</strong> ?
-                    </p>
-                    { error && <p className="text-red-500">{error}</p> }
-
-                    <div className="flex justify-center gap-4 py-5">
-                        <Button 
-                            className="bg-green-700 hover:bg-green-700"
-                            onClick={() => deleteAnimal(animalParaExcluir?.id)}
-                        > Confirmar</Button>
-
-                        <Button 
-                            className="bg-red-800 hover:bg-red-800"
-                            onClick={() => setModalAberto(false)}
-                        > Cancelar</Button>
-                    </div>
-                </div>
-
-            </div>
-        )}
-
+        <ModalDelete
+            isOpen={modalAberto && !!animalParaExcluir}
+            itemName={animalParaExcluir?.nome || "este item"}
+            errorMessage={error}
+            onClose={() => setModalAberto(false)}
+            onConfirm={() => deleteAnimal(animalParaExcluir?.id)}
+        />
 
         {selectedAnimal && (
             <div className="fixed inset-0 bg-slate-300 bg-opacity-60 flex justify-center items-center z-50">
