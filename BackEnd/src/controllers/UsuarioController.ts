@@ -53,10 +53,10 @@ export const deletarUsuario  = async (req: Request, res: Response) => {
     if(result != null)
     {
         await service.deletar(id);
-        return res.status(204);
+        return res.sendStatus(204);
     }
     else
-        return res.status(200).json({message: 'Não existe um usuario com esse id.'});
+        return res.status(404).json({message: 'Não existe um usuario com esse id.'});
 };
 
 export const atualizarUsuario = async(req: Request, res: Response) => {
