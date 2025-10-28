@@ -4,10 +4,11 @@ import { Trash, Pencil, Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import  { useAuthGuard } from "../../utils/validation/useAuthGuard";
 import EditarUsuario from "./EditarUsuario";
+import ModalDelete from "../../components/ModalDelete";
 import { cpfFormatter } from "../../utils/formatters/cpfFormatter";
 import { telefoneFormatter } from "../../utils/formatters/telefoneFormatter";
 
-function usuariosRelatorio()
+function UsuariosRelatorio()
 {
     const [usuarios, setUsuarios] = useState([]); //vamos usar para listar os usuarios
     const [selectedUsuario, setSelectedUsuario] = useState(null); //vamos usar para editar
@@ -48,12 +49,52 @@ function usuariosRelatorio()
             }
             catch(err)
             {
-                setError("Erro ao listar animais: ", err);
-                setAnimais([]);
+                setError("Erro ao listar Usuários: ", err);
+                setUsuarios([]);
             }
         };
         fetchUsuarios();
     }, [navigate]);
+
+    async function deleteUsuario(usuarioId)
+    {
+        if(!usuarioId)
+        {
+            alert("ID do usuário inválido para exclusão.");
+            return; 
+        }
+            
+        try
+        {
+            const response = await fetch(`http://localhost:3000/usuarios/${usuarioId}`, {
+                method: 'DELETE',
+                headers: {
+                    Accept: 'application/json',
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            if(!response.ok)
+            {
+                const data = await response.json();
+                setError(data.message || "Erro ao excluir usuário.");
+                return;  
+            }
+
+            setUsuarios(prevUsuarios => prevUsuarios.filter(usuario => Number(usuario.id) != Number(usuarioId)));
+            setError("");
+        }
+        catch(err)
+        {
+            console.log("Erro ao excluir usuário: ", err);
+            setError("Erro de rede ou conexão. Tente novamente.");
+        }
+        finally
+        {
+            setModalAberto(false);
+            setUsuarioParaExcluir(null);
+        }
+    }
 
     return(
         <div className="p-8 bg-slate-300 min-h-screen">
@@ -111,7 +152,7 @@ function usuariosRelatorio()
 
                                     <button 
                                         title="Excluir usuário"
-                                        onClick={() => {setUsuarioParaExcluir(usuario); setModalAberto(true);} }
+                                        onClick={(event) => { event.stopPropagation(); setUsuarioParaExcluir(usuario); setModalAberto(true);} }
                                         className="text-red-600 hover:text-red-900 mx-1 px-1"
                                     >
                                         <Trash size={25} />
@@ -128,8 +169,16 @@ function usuariosRelatorio()
             </div>
 
             {/* aqui eu vou adicionar meu modal para exclusão e detalhes do usuario */}
+            <ModalDelete 
+                isOpen={modalAberto && !!usuarioParaExcluir}
+                itemName={usuarioParaExcluir?.nome || "Este item"}
+                errorMessage={error}
+                onClose={() => setModalAberto(false)}
+                onConfirm={() => deleteUsuario(usuarioParaExcluir?.id)}
+            />
+
         </div>
     );
 }
 
-export default usuariosRelatorio;
+export default UsuariosRelatorio;
