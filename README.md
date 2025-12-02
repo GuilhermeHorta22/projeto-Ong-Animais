@@ -66,7 +66,7 @@ O sistema é dividido em:
 
 ### Frontend
 - [React](https://reactjs.org/)
-- [Vite ou Create React App](https://vitejs.dev/)
+- [Vite](https://vitejs.dev/)
 - [CSS3](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
 
 ---
