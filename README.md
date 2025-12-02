@@ -71,7 +71,7 @@ O sistema é dividido em:
 
 ---
 
-## Prévias do sistema em funcionamento
+## 🖼️ Prévias do sistema em funcionamento
 Aqui estão algumas imagens do projeto:
 
 ### Tela login
