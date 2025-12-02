@@ -29,7 +29,7 @@ O sistema é dividido em:
 
 ### 📝 Processo de Adoção
 - Realizar adoção (vincular adotante e animal)
-- Atualizar status do animal para "Adotado"
+- Atualizar status do animal para "Indisponível"
 - Registrar a data da adoção
 - Acessar histórico de adoções
 
@@ -68,38 +68,22 @@ O sistema é dividido em:
 - [React](https://reactjs.org/)
 - [Vite ou Create React App](https://vitejs.dev/)
 - [CSS3](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
-- [Axios ou Fetch API](https://axios-http.com/)
 
 ---
 
-## 🔗 Estrutura da API (Backend)
+## Prévias do sistema em funcionamento
+Aqui estão algumas imagens do projeto:
 
-### 🐾 Rotas de Animais
+### Tela login
+![Tela login](./ImgSite/TelaLogin.png)
 
-| Método | Endpoint           | Ação                     |
-|--------|--------------------|--------------------------|
-| GET    | `/animais`         | Listar animais           |
-| POST   | `/animais`         | Cadastrar animal         |
-| PUT    | `/animais/:id`     | Atualizar animal         |
-| DELETE | `/animais/:id`     | Deletar animal           |
-| GET    | `/animais/:id`     | Buscar por ID            |
+### Tela Animais
+![Tela Animais](./ImgSite/TelaDosAnimais.png)
 
-### 👥 Rotas de Usuários (Adotantes e Administradores)
+### Tela exclusão de animal
+![Tela exclusão de animal](./ImgSite/TelaExclusaoAnimal.png)
 
-| Método | Endpoint             | Ação                   |
-|--------|----------------------|------------------------|
-| GET    | `/usuarios`          | Listar usuários        |
-| POST   | `/usuarios`          | Cadastrar usuário      |
-| PUT    | `/usuarios/:id`      | Atualizar usuário      |
-| DELETE | `/usuarios/:id`      | Deletar usuário        |
-| GET    | `/usuarios/:id`      | Buscar usuário por ID  |
-
-
-### 📄 Rotas de Adoções
-
-| Método | Endpoint        | Ação                        |
-|--------|-----------------|-----------------------------|
-| GET    | `/adocoes`      | Listar adoções              |
-| POST   | `/adocoes`      | Registrar nova adoção       |
+### Tela registro de usuários
+![Tela registro de usuários](./ImgSite/TelaRegistroUsuarios.png)
 
 ---
