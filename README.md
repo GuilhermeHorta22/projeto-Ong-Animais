@@ -74,16 +74,16 @@ O sistema é dividido em:
 ## 🖼️ Prévias do sistema em funcionamento
 Aqui estão algumas imagens do projeto:
 
-### Tela login
+### Tela De Login
 ![Tela login](./ImgSite/TelaLogin.png)
 
-### Tela Animais
+### Tela De Animais
 ![Tela Animais](./ImgSite/TelaDosAnimais.png)
 
-### Tela exclusão de animal
+### Tela De Exclusão De Animal
 ![Tela exclusão de animal](./ImgSite/TelaExclusaoAnimal.png)
 
-### Tela registro de usuários
+### Tela De Registro De Usuários
 ![Tela registro de usuários](./ImgSite/TelaRegistroUsuarios.png)
 
 ---
