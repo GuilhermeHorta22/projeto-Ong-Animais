@@ -36,11 +36,11 @@ export const criarUsuario = async (req: Request, res: Response) => {
     const telefoneValido = telefoneValidation(telefone);
 
     if(cpfValido === null)
-        return res.status(409).json({error: 'CPF inválido.'})
+        return res.status(409).json({error: 'CPF inválido.'});
     if(telefoneValido === null)
         return res.status(409).json({error: 'Telefone inválido.'});
     if(emailValidation(email) === false)
-        return res.status(409).json({error: 'Email inválido.'})
+        return res.status(409).json({error: 'Email inválido.'});
 
     const novoUsuario = await service.criar({nome, cpf:cpfValido, telefone:telefoneValido, endereco, email, senha, tipo});
     return res.json(novoUsuario);
