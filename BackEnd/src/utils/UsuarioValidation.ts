@@ -9,7 +9,7 @@ export function cpfValidation(cpf: string): string | null {
         soma += parseInt(cpf.charAt(i)) * (10-i);
 
     let resto = 11 - (soma % 11);
-    if(resto === 10 || resto === 1)
+    if(resto > 9)
         resto = 0;
     if(resto !== parseInt(cpf.charAt(9)))
         return null;
@@ -19,7 +19,7 @@ export function cpfValidation(cpf: string): string | null {
         soma += parseInt(cpf.charAt(i)) * (11 - i);
 
     resto = 11 - (soma % 11);
-    if(resto === 10 || resto === 11)
+    if(resto > 9)
         resto = 0;
     if(resto !== parseInt(cpf.charAt(10)))
         return null;
