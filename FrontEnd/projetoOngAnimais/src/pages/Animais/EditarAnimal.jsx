@@ -24,11 +24,10 @@ function EditarAnimal()
     });
 
     const token = localStorage.getItem("token");
-    const tipoUsuario = localStorage.getItem("tipo");
-    const isAuthorized = useAuthGuard(tipoUsuario);
+    const isAuthorized = useAuthGuard("ADMIN");
 
     useEffect(() => {
-        if(isAuthorized === true && tipoUsuario === "ADMIN" && id)
+        if(isAuthorized === true && id)
         {
             const fetchAnimal = async () => {
                 try
@@ -52,7 +51,7 @@ function EditarAnimal()
         }
     },[id]);
 
-    if(isAuthorized === false || tipoUsuario !== "ADMIN")
+    if(isAuthorized === false)
         return null;
 
     const handleChange = (e) => {
