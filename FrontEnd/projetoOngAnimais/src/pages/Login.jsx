@@ -38,6 +38,7 @@ function Login()
                 return;
             }
 
+            //armazenando as informacoes do usuario
             localStorage.setItem("token", data.token);
             localStorage.setItem("tipo", data.tipo);
 
