@@ -23,33 +23,37 @@ function EditarAnimal()
         foto: null,
     });
 
-    //validacao do token e do tipo do usuario
     const token = localStorage.getItem("token");
-    const isAuthorized = useAuthGuard("ADMIN");
-    if(isAuthorized === false)
-        return null;
+    const tipoUsuario = localStorage.getItem("tipo");
+    const isAuthorized = useAuthGuard(tipoUsuario);
 
-     useEffect(() => {
-        const fetchAnimal = async () => {
-            try
-            {
-                const response = await fetch(`http://localhost:3000/animais/${id}`, {
-                    method: 'GET',
-                    headers: {
-                        Accept: 'application/json',
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                const data = await response.json();
-                setAnimal(data);
-            }
-            catch(err)
-            {
-                console.log("Erro ao buscar animal: ",err);
-            }
-        };
-        fetchAnimal();
+    useEffect(() => {
+        if(isAuthorized === true && tipoUsuario === "ADMIN" && id)
+        {
+            const fetchAnimal = async () => {
+                try
+                {
+                    const response = await fetch(`http://localhost:3000/animais/${id}`, {
+                        method: 'GET',
+                        headers: {
+                            Accept: 'application/json',
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                    const data = await response.json();
+                    setAnimal(data);
+                }
+                catch(err)
+                {
+                    console.log("Erro ao buscar animal: ",err);
+                }
+            };
+            fetchAnimal();
+        }
     },[id]);
+
+    if(isAuthorized === false || tipoUsuario !== "ADMIN")
+        return null;
 
     const handleChange = (e) => {
         const { name, value } = e.target;
