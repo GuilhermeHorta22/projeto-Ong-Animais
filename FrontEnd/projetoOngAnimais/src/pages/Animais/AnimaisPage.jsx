@@ -193,7 +193,7 @@ function AnimaisPage()
                         className="w-[400px] h-[400px] object-cover rounded-xl shadow-lg mx-auto"
                     />
 
-                    <h2 className="text-2xl font-bold text-slate-800 mb-2">{selectedAnimal.nome}</h2>
+                    <h2 className="text-2xl font-bold text-slate-800 mb-2">{textFormatter(selectedAnimal.nome)}</h2>
                     <p className="text-slate-600"><strong>Espécie:</strong> {textFormatter(selectedAnimal.especie)}</p>
                     <p className="text-slate-600"><strong>Raça:</strong> {textFormatter(selectedAnimal.raca)}</p>
                     <p className="text-slate-600"><strong>Idade:</strong> {selectedAnimal.idade} anos</p>
