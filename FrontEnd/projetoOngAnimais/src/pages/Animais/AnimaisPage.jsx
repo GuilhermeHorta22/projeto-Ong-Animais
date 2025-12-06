@@ -4,6 +4,7 @@ import ModalDelete from "../../components/ModalDelete";
 import { TrashIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuthGuard } from "../../utils/validation/useAuthGuard";
+import { textFormatter } from "../../utils/formatters/textFormatter";
 
 function AnimaisPage() 
 {
@@ -120,7 +121,7 @@ function AnimaisPage()
                             <div>
                                 {/* titulo e lixeira juntos */}
                                 <div className="flex justify-between items-center">
-                                    <h2 className="text-lg font-bold capitalize">{animal.nome}</h2>
+                                    <h2 className="text-lg font-bold capitalize">{textFormatter(animal.nome)}</h2>
                                     {tipoUsuario === "ADMIN" &&(
                                         <>
                                             <button 
@@ -132,9 +133,9 @@ function AnimaisPage()
                                     )}
                                     
                                 </div>   
-                                <p className="text-gray-600">{animal.especie} • {animal.raca}</p>
+                                <p className="text-gray-600">{textFormatter(animal.especie)} • {textFormatter(animal.raca)}</p>
                                 <p className="text-gray-600">Idade: {animal.idade} anos</p>
-                                <p className="text-gray-600">Porte: {animal.porte}</p>
+                                <p className="text-gray-600">Porte: {textFormatter(animal.porte)}</p>
                                 <p
                                     className={`font-semibold ${
                                     animal.status === 'Disponível' ? 'text-green-600' : 'text-red-600'
@@ -193,12 +194,12 @@ function AnimaisPage()
                     />
 
                     <h2 className="text-2xl font-bold text-slate-800 mb-2">{selectedAnimal.nome}</h2>
-                    <p className="text-slate-600"><strong>Espécie:</strong> {selectedAnimal.especie}</p>
-                    <p className="text-slate-600"><strong>Raça:</strong> {selectedAnimal.raca}</p>
+                    <p className="text-slate-600"><strong>Espécie:</strong> {textFormatter(selectedAnimal.especie)}</p>
+                    <p className="text-slate-600"><strong>Raça:</strong> {textFormatter(selectedAnimal.raca)}</p>
                     <p className="text-slate-600"><strong>Idade:</strong> {selectedAnimal.idade} anos</p>
-                    <p className="text-slate-600"><strong>Porte:</strong> {selectedAnimal.porte}</p>
+                    <p className="text-slate-600"><strong>Porte:</strong> {textFormatter(selectedAnimal.porte)}</p>
                     <p className="text-slate-600"><strong>Status:</strong> {selectedAnimal.status}</p>
-                    <p className="text-slate-600 mt-2"><strong>Descrição:</strong> {selectedAnimal.descricao}</p>
+                    <p className="text-slate-600 mt-2"><strong>Descrição:</strong> {textFormatter(selectedAnimal.descricao)}</p>
                 </div>
             </div>
         )}
