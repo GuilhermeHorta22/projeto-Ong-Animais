@@ -7,6 +7,7 @@ import EditarUsuario from "./EditarUsuario";
 import ModalDelete from "../../components/ModalDelete";
 import { cpfFormatter } from "../../utils/formatters/cpfFormatter";
 import { telefoneFormatter } from "../../utils/formatters/telefoneFormatter";
+import { textFormatter } from "../../utils/formatters/textFormatter";
 
 function UsuariosRelatorio()
 {
@@ -56,7 +57,7 @@ function UsuariosRelatorio()
             };
             fetchUsuarios();
         } 
-    }, [isAuthorized]);
+    }, [isAuthorized, token]);
 
     if(isAuthorized === false)
         return null;
@@ -123,7 +124,7 @@ function UsuariosRelatorio()
                         {usuarios.map((usuario) => (
                             <tr key={usuario.id} className="hover:bg-gray-50">
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900 capitalize">
-                                    {usuario.nome}
+                                    {textFormatter(usuario.nome)}
                                 </td>
 
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
