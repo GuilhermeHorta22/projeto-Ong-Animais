@@ -55,7 +55,7 @@ function AnimaisPage()
             fetchAnimais();
         }
         
-    }, [isAuthorized]);
+    }, [isAuthorized, token]);
 
     if(isAuthorized === false)
         return null;
