@@ -21,40 +21,45 @@ function UsuariosRelatorio()
     //validacao de token
     const token = localStorage.getItem("token");
     const isAuthorized = useAuthGuard("ADMIN");
-    if(isAuthorized === false)
-        return null;
 
     useEffect(() => {
-        const fetchUsuarios = async () => {
-            try
-            {
-                const response = await fetch('http://localhost:3000/usuarios/', {
-                    headers: {
-                        "Authorization": `Bearer ${token}`,
-                        "Content-Type": "application/json"
-                    }
-                });
-
-                const data = await response.json();
-                if(!response.ok)
+        console.log("valor do isAuthorized: "+isAuthorized);
+        if(isAuthorized === true)
+        {
+            const fetchUsuarios = async () => {
+                try
                 {
-                    setError(data.error || "Erro ao carregar os usuários.");
-                    return;
-                }
+                    const response = await fetch('http://localhost:3000/usuarios/', {
+                        headers: {
+                            "Authorization": `Bearer ${token}`,
+                            "Content-Type": "application/json"
+                        }
+                    });
 
-                if(Array.isArray(data))
-                    setUsuarios(data);
-                else
+                    const data = await response.json();
+                    if(!response.ok)
+                    {
+                        setError(data.error || "Erro ao carregar os usuários.");
+                        return;
+                    }
+
+                    if(Array.isArray(data))
+                        setUsuarios(data);
+                    else
+                        setUsuarios([]);
+                }
+                catch(err)
+                {
+                    setError("Erro ao listar Usuários: ", err);
                     setUsuarios([]);
-            }
-            catch(err)
-            {
-                setError("Erro ao listar Usuários: ", err);
-                setUsuarios([]);
-            }
-        };
-        fetchUsuarios();
-    }, [navigate]);
+                }
+            };
+            fetchUsuarios();
+        } 
+    }, [isAuthorized]);
+
+    if(isAuthorized === false)
+        return null;
 
     async function deleteUsuario(usuarioId)
     {
