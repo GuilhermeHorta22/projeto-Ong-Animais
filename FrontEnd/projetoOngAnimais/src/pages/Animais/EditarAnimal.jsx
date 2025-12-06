@@ -49,7 +49,7 @@ function EditarAnimal()
             };
             fetchAnimal();
         }
-    },[id]);
+    },[id, isAuthorized, token]);
 
     if(isAuthorized === false)
         return null;
