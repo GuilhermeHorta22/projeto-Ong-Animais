@@ -18,41 +18,46 @@ function AnimaisPage()
     const token = localStorage.getItem("token");
     const tipoUsuario = localStorage.getItem("tipo");
     const isAuthorized = useAuthGuard("ADMIN", "ADOTANTE");
-    if(isAuthorized === false)
-        return null;
 
     useEffect(() => {
-        const fetchAnimais = async () => {
-            try 
-            {
-                const response = await fetch("http://localhost:3000/animais/", {
-                    headers: {
-                        "Authorization": `Bearer ${token}`,
-                        "Content-Type": "application/json"
-                    }
-                });
-
-                const data = await response.json();
-
-                if(!response.ok)
+        if(isAuthorized === true)
+        {
+            const fetchAnimais = async () => {
+                try 
                 {
-                    setError(data.error || "Erro ao carregar animais.");
-                    return;
-                }
+                    const response = await fetch("http://localhost:3000/animais/", {
+                        headers: {
+                            "Authorization": `Bearer ${token}`,
+                            "Content-Type": "application/json"
+                        }
+                    });
 
-                if(Array.isArray(data))
-                    setAnimais(data);
-                else
-                    setAnimais([]); //se caso não tiver animais ele deixar um array vazio
-            } 
-            catch(err) 
-            {
-                console.log("Erro ao buscar animais:", err);
-                setAnimais([]); //para evitar erros se o banco for vazio
-            }
-        };
-        fetchAnimais();
-    }, [navigate]);
+                    const data = await response.json();
+
+                    if(!response.ok)
+                    {
+                        setError(data.error || "Erro ao carregar animais.");
+                        return;
+                    }
+
+                    if(Array.isArray(data))
+                        setAnimais(data);
+                    else
+                        setAnimais([]); //se caso não tiver animais ele deixar um array vazio
+                } 
+                catch(err) 
+                {
+                    console.log("Erro ao buscar animais:", err);
+                    setAnimais([]); //para evitar erros se o banco for vazio
+                }
+            };
+            fetchAnimais();
+        }
+        
+    }, [isAuthorized]);
+
+    if(isAuthorized === false)
+        return null;
 
     async function deleteAnimal(animalId) //tem que ser async para aceitar o await
     {
