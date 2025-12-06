@@ -108,7 +108,7 @@ function CadastroAnimal ()
         <div className="p-8 bg-slate-300 min-h-screen flex justify-center items-center">
             <form onSubmit={(e) => {
                     e.preventDefault();
-                    handleCadastrarAnimal();
+                    handleCadastrarAnimal(e);
                 }}
                 className="bg-white rounded-xl shadow-xl p-8 w-full max-w-lg"
             >
@@ -125,13 +125,11 @@ function CadastroAnimal ()
                     />
 
                     <Label className="text-slate-800">Espécie</Label>
-                    <Input 
-                        type="text"
-                        placeholder="Especie do animal"
-                        value={especie}
-                        onChange={(e) => setEspecie(e.target.value)}
-                        className="border border-slate-400 rounded-lg p-2"
-                    />
+                    <Select value={especie} onChange={(e) => setEspecie(e.target.value)} className="border border-slate-400 rounded-lg p-2">
+                        <option value="">Selecione...</option>
+                        <option value="cachorro">Cachorro</option>
+                        <option value="gato">Gato</option>
+                    </Select>
 
                     <Label className="text-slate-800">Raça</Label>
                     <Input 
@@ -152,13 +150,12 @@ function CadastroAnimal ()
                     />
 
                     <Label className="text-slate-800">Porte</Label>
-                    <Input 
-                        type="text"
-                        placeholder="Porte do animal"
-                        value={porte}
-                        onChange={(e) => setPorte(e.target.value)}
-                        className="border border-slate-400 rounded-lg p-2"
-                    />
+                    <Select value={porte} onChange={(e) => setPorte(e.target.value)} className="border border-slate-400 rounded-lg p-2">
+                        <option value="">Selecione...</option>
+                        <option value="pequeno">Pequeno</option>
+                        <option value="medio">Médio</option>
+                        <option value="grande">Grande</option>
+                    </Select>
 
                     <Label className="text-slate-800">Descrição</Label>
                     <textarea
