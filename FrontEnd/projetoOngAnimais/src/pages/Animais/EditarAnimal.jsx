@@ -170,11 +170,15 @@ function EditarAnimal()
                         <option value="Indisponível">Indisponível</option>
                     </Select>
 
-                    { error && <p className="text-red-500">{error}</p> }
-                    { success && <p className="text-green-500">{success}</p> }
+                    { error && <p className="text-red-700">{error}</p> }
+                    { success && <p className="text-green-700">{success}</p> }
 
                     <div className="flex justify-center gap-4 mt-4">
-                        <Button onClick={handleSubmit}>Salvar</Button>
+                        <Button onClick={handleSubmit} 
+                            className="bg-green-700 hover:bg-green-800"
+                        >
+                            Salvar
+                        </Button>
                         <Button
                             onClick={() => navigate("/admin")}
                             className="bg-red-600 hover:bg-red-800 text-white rounded-lg px-4 py-2"
