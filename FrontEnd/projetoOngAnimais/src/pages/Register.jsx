@@ -4,6 +4,7 @@ import Label from "../components/Label";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import Select from "../components/Select";
+import Sidebar from "../components/Sidebar";
 import { cpfFormatter } from "../utils/formatters/cpfFormatter";
 import { telefoneFormatter } from "../utils/formatters/telefoneFormatter";
 import { CornerUpLeft } from "lucide-react";
@@ -21,7 +22,7 @@ function Register()
     const [senha, setSenha] = useState("");
     const [tipo, setTipo] = useState("");
     const [error, setError] = useState("");
-    const [sucess, setSucess] = useState("");
+    const [success, setSuccess] = useState("");
 
     const tipoUsuario = localStorage.getItem("tipo");
 
@@ -38,7 +39,7 @@ function Register()
     const handleRegister = async (e) => {
         e.preventDefault();
         setError("");
-        setSucess("");
+        setSuccess("");
 
         //para ter o estado do nosso usuario
         const tipoFinal = tipoUsuario === "ADMIN" ? "ADMIN" : "ADOTANTE";
@@ -73,7 +74,7 @@ function Register()
                 return;
             }
 
-            setSucess("Usuário cadastrado com sucesso!");
+            setSuccess("Usuário cadastrado com sucesso!");
             limparFormulario();
             if(tipoUsuario === "ADMIN")
                 setTimeout(() => navigate("/admin"), 2000);
@@ -89,123 +90,111 @@ function Register()
 
      //renderizando a pagina de cadastro
      return (
-        <div className="w-screen h-screen bg-slate-300 flex justify-center items-center p-6">
-            <form onSubmit={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleRegister(e);
-                }}>
-                <div className="w-[450px] bg-slate-800 rounded-xl shadow-lg p-8 space-y-4">
-                    <div className="flex items-center justify-between mb-4">
+        <div className="flex">
+            {tipoUsuario === "ADMIN" && (
+                <Sidebar />
+            )}
+
+            <div className="flex-1 p-8 bg-slate-300 min-h-screen flex justify-center items-center">
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        handleRegister(e);
+                    }}
+                    className="bg-white rounded-xl shadow-xl p-8 w-full max-w-lg"
+                >
+                    <h1 className="text-2xl font-bold text-slate-800 mb-4 text-center">
+                        {tipoUsuario === "ADMIN" ? "Cadastro Administrador" : "Cadastro Usuário"}
+                    </h1>
+
+                    <div className="flex flex-col gap-4">
+                        <Label className="text-slate-800">Nome</Label>
+                        <Input 
+                            type="text"
+                            placeholder="Nome"
+                            value={nome}
+                            onChange={(e) => setNome(e.target.value)}
+                            maxLength="30"
+                            className="border border-slate-400 rounded-lg p-2"
+                        />
+
+                        <Label className="text-slate-800">Cpf</Label>
+                        <Input 
+                            type="text"
+                            placeholder="CPF"
+                            value={cpfFormatter(cpf)}
+                            onChange={(e) => setCpf(e.target.value)}
+                            maxLength="14"
+                            className="border border-slate-400 rounded-lg p-2"
+                        />
+
+                        <Label className="text-slate-800">Telefone</Label>
+                        <Input
+                            type="text"
+                            placeholder="Telefone"
+                            value={telefoneFormatter(telefone)}
+                            onChange={(e) => setTelefone(e.target.value)}
+                            maxLength="15"
+                            className="border border-slate-400 rounded-lg p-2"
+                        />
+
+                        <Label className="text-slate-800">Endereço</Label>
+                        <Input 
+                            type="text"
+                            placeholder="Endereço"
+                            value={endereco}
+                            onChange={(e) => setEndereco(e.target.value)}
+                            maxLengh="35"
+                            className="border border-slate-400 rounded-lg p-2"
+                        />
+
+                        <Label className="text-slate-800">E-mail</Label>
+                        <Input
+                            type="text"
+                            placeholder="E-mail"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            maxLength="30"
+                            className="border border-slate-400 rounded-lg p-2"
+                        />
+
+                        <Label className="text-slate-800">Senha</Label>
+                        <Input 
+                            type="password"
+                            placeholder="Senha"
+                            value={senha}
+                            onChange={(e) => setSenha(e.target.value)}
+                            maxLength="15"
+                            className="border border-slate-400 rounded-lg p-2"
+                        />
+
                         {tipoUsuario === "ADMIN" && (
-                            <button 
-                                type="button"
-                                onClick={() => navigate("/admin")}
-                                className="text-white hover:text-blue-400 transition-colors"
-                            >
-                                <CornerUpLeft size={24} />
-                            </button>
+                            <div>
+                                <Label className="text-slate-800">Tipo</Label>
+                                <Select value={tipo} onChange={(e) => setTipo(e.target.value)} >
+                                    <option value="ADMIN">Administrador</option>
+                                </Select>
+                            </div>
                         )}
-                        <h1 className="text-white text-2xl font-semibold flex-1 text-center">
-                            Cadastro de Usuário
-                        </h1>
-                        <div className="w-6"></div> {/* Espaçador para manter o título centralizado */}
-                    </div>
 
-                    <div>
-                        <Label>Nome</Label>
-                        <Input
-                        type="text"
-                        placeholder="Digite seu nome"
-                        value={nome}
-                        onChange={(e) => setNome(e.target.value)}
-                        />
-                    </div>
+                        { error && <p className="text-red-700">{error}</p> }
+                        { success && <p className="text-green-700">{success}</p> }
 
-                    <div>
-                        <Label>CPF</Label>
-                        <Input
-                        type="text"
-                        placeholder="Digite seu CPF"
-                        value={cpf}
-                        onChange={(e) => setCpf(cpfFormatter(e.target.value))}
-                        />
-                    </div>
-
-                    <div>
-                        <Label>Telefone</Label>
-                        <Input
-                        type="text"
-                        placeholder="Digite seu telefone"
-                        value={telefone}
-                        maxLength={15}
-                        onChange={(e) => setTelefone(telefoneFormatter(e.target.value))}
-                        />
-                    </div>
-
-                    <div>
-                        <Label>Endereco</Label>
-                        <Input
-                        type="text"
-                        placeholder="Digite seu endereco"
-                        value={endereco}
-                        onChange={(e) => setEndereco(e.target.value)}
-                        />
-                    </div>
-
-                    <div>
-                        <Label>Email</Label>
-                        <Input
-                        type="email"
-                        placeholder="Digite seu email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </div>
-
-                    {tipoUsuario === "ADMIN" && (
-                        <div>
-                            <Label>Tipo</Label>
-                            <Select
-                                value={tipo}
-                                onChange={(e) => setTipo(e.target.value)}
+                        <div className="flex justify-center gap-4 mt-4">
+                            <Button type="submit" className="bg-green-700 hover:bg-green-800">
+                                Cadastrar
+                            </Button>
+                            <Button onClick={() => navigate("/admin")}
+                                className="bg-red-700 hover:bg-red-800"
                             >
-                                <option value="ADMIN">Admin</option>
-                            </Select>
-                        </div>  
-                    )}
-
-                    <div>
-                        <Label>Senha</Label>
-                        <Input
-                        type="password"
-                        placeholder="Digite sua senha"
-                        value={senha}
-                        onChange={(e) => setSenha(e.target.value)}
-                        />
-                    </div>
-
-                    {error && <p className="text-red-500 text-center">{error}</p>}
-                    {sucess && <p className="text-green-400 text-center">{sucess}</p>}
-
-                    <div className="flex justify-center mt-4">
-                        <Button type="submit">Cadastrar</Button>
-                    </div>
-
-                    {tipoUsuario !== "ADMIN" && (
-                        <div className="text-center text-stone-50 mt-4">
-                            <p>
-                                Já tem conta?{" "}
-                                <Link to="/" className="text-blue-400 underline">
-                                    Fazer Login
-                                </Link>
-                            </p>
+                                Cancelar
+                            </Button>
                         </div>
-                    )}
-                </div>
-            </form>
+                    </div>
+                </form>
+            </div>
         </div>
-     );
+    );
 }
 
 export default Register;
