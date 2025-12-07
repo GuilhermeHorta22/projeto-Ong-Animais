@@ -15,7 +15,7 @@ function AdminPage()
     return (
         <div className="flex">
             <Sidebar />
-                <div className="flex-1 bg-slate-300 min-h-screen p-6">
+                <div className="flex-1 bg-slate-300 min-h-screen">
                     <Outlet />
                 </div>
             </div>
