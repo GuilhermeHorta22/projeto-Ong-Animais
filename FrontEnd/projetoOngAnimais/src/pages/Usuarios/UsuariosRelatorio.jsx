@@ -8,12 +8,14 @@ import ModalDelete from "../../components/ModalDelete";
 import { cpfFormatter } from "../../utils/formatters/cpfFormatter";
 import { telefoneFormatter } from "../../utils/formatters/telefoneFormatter";
 import { textFormatter } from "../../utils/formatters/textFormatter";
+import ModalUsuarios from "../../components/ModalUsuarios";
 
 function UsuariosRelatorio()
 {
     const [usuarios, setUsuarios] = useState([]); //vamos usar para listar os usuarios
     const [selectedUsuario, setSelectedUsuario] = useState(null); //vamos usar para editar
     const [modalAberto, setModalAberto] = useState(false); //vamos usar para ter controle do modal de exclusao
+    const [modalUserAberto, setModalUserAberto] = useState(false);
     const [usuarioParaExcluir, setUsuarioParaExcluir] = useState(null);
     const [error, setError] = useState("");
 
@@ -23,8 +25,8 @@ function UsuariosRelatorio()
     const token = localStorage.getItem("token");
     const isAuthorized = useAuthGuard("ADMIN");
 
+    //listando todos os usuarios
     useEffect(() => {
-        console.log("valor do isAuthorized: "+isAuthorized);
         if(isAuthorized === true)
         {
             const fetchUsuarios = async () => {
@@ -142,7 +144,7 @@ function UsuariosRelatorio()
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-center font-medium">
                                     <button
                                         title="Visualizar detalhes do usuário"
-                                        onClick={() => setSelectedUsuario()}
+                                        onClick={(event) => { event.stopPropagation(); setSelectedUsuario(usuario); setModalUserAberto(true);} }
                                         className="text-blue-600 hover:text-blue-900 mx-1 px-1"
                                     >
                                         <Eye size={25} />
@@ -173,6 +175,13 @@ function UsuariosRelatorio()
                     <p className="p-6 text-center text-gray-500">Nenhum usuário encontrado.</p>
                 )}
             </div>
+
+            <ModalUsuarios
+                isOpen={modalUserAberto && !!selectedUsuario}
+                itemUser={selectedUsuario || "Este item"}
+                errorMessage={error}
+                onClose={() => setModalUserAberto(false)}
+            />
 
             {/* aqui eu vou adicionar meu modal para exclusão e detalhes do usuario */}
             <ModalDelete 
