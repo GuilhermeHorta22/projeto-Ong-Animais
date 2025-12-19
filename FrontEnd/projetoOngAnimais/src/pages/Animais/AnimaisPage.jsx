@@ -5,12 +5,14 @@ import { TrashIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuthGuard } from "../../utils/validation/useAuthGuard";
 import { textFormatter } from "../../utils/formatters/textFormatter";
+import ModalAnimais from  "./../../components/ModalAnimais";
 
 function AnimaisPage() 
 {
     const [animais, setAnimais] = useState([]);
     const [selectedAnimal, setSelectedAnimal] = useState(null);
     const [modalAberto, setModalAberto] = useState(false);
+    const [modalAnimalAberto, setModalAnimalAberto] = useState(false);
     const [animalParaExcluir, setAnimalParaExcluir] = useState(null);
     const [error, setError] = useState("");
 
@@ -103,106 +105,87 @@ function AnimaisPage()
                 {tipoUsuario === "ADMIN" ? "Gerenciamento de Animais" : "Animais Disponíveis para Adoção"}
             </h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {animais.map((animal) => (
-                <div
-                    key={animal.id}
-                    className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col"
-                    style={{ minHeight: "430px" }} // garante altura mínima
-                >
-                    <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col">
-                        <img
-                            src={`http://localhost:3000/uploads/${animal.foto_url}`}
-                            alt={animal.nome}
-                            className="w-full h-70 object-cover"
-                        />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {animais.map((animal) => (
+                    <div
+                        key={animal.id}
+                        className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col"
+                        style={{ minHeight: "430px" }} // garante altura mínima
+                    >
+                        <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col">
+                            <img
+                                src={`http://localhost:3000/uploads/${animal.foto_url}`}
+                                alt={animal.nome}
+                                className="w-full h-70 object-cover"
+                            />
 
-                        <div className="flex flex-col justify-between flex-grow p-4">
-                            <div>
-                                {/* titulo e lixeira juntos */}
-                                <div className="flex justify-between items-center">
-                                    <h2 className="text-lg font-bold capitalize">{textFormatter(animal.nome)}</h2>
-                                    {tipoUsuario === "ADMIN" &&(
-                                        <>
-                                            <button 
-                                                className="mt-2 text-red-600 hover:text-red-800" 
-                                                onClick={(event) => { event.stopPropagation(); setAnimalParaExcluir(animal); setModalAberto(true); }}>
-                                                <TrashIcon/>
-                                            </button>
-                                        </>
+                            <div className="flex flex-col justify-between flex-grow p-4">
+                                <div>
+                                    {/* titulo e lixeira juntos */}
+                                    <div className="flex justify-between items-center">
+                                        <h2 className="text-lg font-bold capitalize">{textFormatter(animal.nome)}</h2>
+                                        {tipoUsuario === "ADMIN" &&(
+                                            <>
+                                                <button 
+                                                    className="mt-2 text-red-600 hover:text-red-800" 
+                                                    onClick={(event) => { event.stopPropagation(); setAnimalParaExcluir(animal); setModalAberto(true); }}>
+                                                    <TrashIcon/>
+                                                </button>
+                                            </>
+                                        )}
+                                        
+                                    </div>   
+                                    <p className="text-gray-600">{textFormatter(animal.especie)} • {textFormatter(animal.raca)}</p>
+                                    <p className="text-gray-600">Idade: {animal.idade} anos</p>
+                                    <p className="text-gray-600">Porte: {textFormatter(animal.porte)}</p>
+                                    <p
+                                        className={`font-semibold ${
+                                        animal.status === 'Disponível' ? 'text-green-600' : 'text-red-600'
+                                        }`}
+                                    >
+                                        {animal.status}
+                                    </p>
+
+                                
+                                </div>
+
+                                <div className="mt-4 flex gap-2">
+                                    {tipoUsuario === "ADMIN" && (
+                                        <button 
+                                            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition"
+                                            onClick={() => navigate(`/admin/editar-animal/${animal.id}`)}>
+                                            Editar
+                                        </button>
                                     )}
                                     
-                                </div>   
-                                <p className="text-gray-600">{textFormatter(animal.especie)} • {textFormatter(animal.raca)}</p>
-                                <p className="text-gray-600">Idade: {animal.idade} anos</p>
-                                <p className="text-gray-600">Porte: {textFormatter(animal.porte)}</p>
-                                <p
-                                    className={`font-semibold ${
-                                    animal.status === 'Disponível' ? 'text-green-600' : 'text-red-600'
-                                    }`}
-                                >
-                                    {animal.status}
-                                </p>
-
-                               
-                            </div>
-
-                            <div className="mt-4 flex gap-2">
-                                {tipoUsuario === "ADMIN" && (
                                     <button 
-                                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition"
-                                        onClick={() => navigate(`/admin/editar-animal/${animal.id}`)}>
-                                        Editar
+                                        className="flex-1 bg-gray-800 hover:bg-gray-900 text-white font-medium py-2 rounded-lg transition"
+                                        onClick={(event) => {event.stopPropagation(); setSelectedAnimal(animal); setModalAnimalAberto(true); } }>
+                                        Detalhes
                                     </button>
-                                )}
-                                
-                                <button 
-                                    className="flex-1 bg-gray-800 hover:bg-gray-900 text-white font-medium py-2 rounded-lg transition"
-                                    onClick={() => setSelectedAnimal(animal)}>
-                                    Detalhes
-                                </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            ))}
-        </div>
-
-        {/* criando meu modal de deletar animal */}
-        <ModalDelete
-            isOpen={modalAberto && !!animalParaExcluir}
-            itemName={animalParaExcluir?.nome || "este item"}
-            errorMessage={error}
-            onClose={() => setModalAberto(false)}
-            onConfirm={() => deleteAnimal(animalParaExcluir?.id)}
-        />
-
-        {selectedAnimal && (
-            <div className="fixed inset-0 bg-slate-300 bg-opacity-60 flex justify-center items-center z-50">
-                <div className="bg-white rounded-xl shadow-xl p-8 w-full max-w-lg relative">
-                    <button
-                    onClick={() => setSelectedAnimal(null)}
-                    className="absolute top-3 right-3 text-slate-500 hover:text-slate-800 text-xl font-bold"
-                    >
-                    ×
-                    </button>
-
-                    <img
-                        src={`http://localhost:3000/uploads/${selectedAnimal.foto_url}`}
-                        alt={selectedAnimal.nome}
-                        className="w-[400px] h-[400px] object-cover rounded-xl shadow-lg mx-auto"
-                    />
-
-                    <h2 className="text-2xl font-bold text-slate-800 mb-2">{textFormatter(selectedAnimal.nome)}</h2>
-                    <p className="text-slate-600"><strong>Espécie:</strong> {textFormatter(selectedAnimal.especie)}</p>
-                    <p className="text-slate-600"><strong>Raça:</strong> {textFormatter(selectedAnimal.raca)}</p>
-                    <p className="text-slate-600"><strong>Idade:</strong> {selectedAnimal.idade} anos</p>
-                    <p className="text-slate-600"><strong>Porte:</strong> {textFormatter(selectedAnimal.porte)}</p>
-                    <p className="text-slate-600"><strong>Status:</strong> {selectedAnimal.status}</p>
-                    <p className="text-slate-600 mt-2"><strong>Descrição:</strong> {textFormatter(selectedAnimal.descricao)}</p>
-                </div>
+                ))}
             </div>
-        )}
+
+            {/* criando meu modal de deletar animal */}
+            <ModalDelete
+                isOpen={modalAberto && !!animalParaExcluir}
+                itemName={animalParaExcluir?.nome || "este item"}
+                errorMessage={error}
+                onClose={() => setModalAberto(false)}
+                onConfirm={() => deleteAnimal(animalParaExcluir?.id)}
+            />
+
+            {/* adicionando novo modal para visualizacao de detalhes dos animais */}
+            <ModalAnimais 
+                isOpen={modalAnimalAberto && !!selectedAnimal}
+                onClose={() => setModalAnimalAberto(false)}
+                itemAnimais={selectedAnimal}
+                errorMessage={error}
+            />
         </div>
     );
 }
