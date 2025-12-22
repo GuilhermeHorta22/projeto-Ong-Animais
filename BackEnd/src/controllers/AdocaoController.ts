@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import { AdocaoService } from '../services/AdocaoService.js';
 import { isDataView } from 'util/types';
+import { AnimalService } from '../services/AnimalService.js';
 
 const service = new AdocaoService();
+const animalService = new AnimalService();
 
 export const listarAdocao = async (req: Request, res: Response) => {
     const adocoes = await service.listar();
@@ -27,12 +29,16 @@ export const buscarAdocao = async (req: Request, res: Response) => {
 }
 
 export const criarAdocao = async (req: Request, res: Response) => {
-    const {id_animal, id_usuario, data_adocao} = req.body;
+    const {id_animal, id_usuario} = req.body;
 
     if(!id_animal || !id_usuario)
         return res.status(400).json({error: 'Dados obrigatorios faltando.'})
 
+    const data_adocao = new Date();
+
     const novaAdocao = await service.criar({id_animal, id_usuario, data_adocao});
+
+    await animalService.atualizarStatus(id_animal, "Adotado");
     return res.json(novaAdocao);
 }
 
