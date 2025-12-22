@@ -25,7 +25,7 @@ function ModalAnimais( {isOpen, onClose, itemAnimais, errorMessage }) {
                 <p className="text-slate-800 text-lg"><strong>Porte:</strong> {textFormatter(itemAnimais.porte)} </p>
                 <p className="text-slate-800 text-lg"><strong>Descrição:</strong> {textFormatter(itemAnimais.descricao)} </p>
                 <p className="text-slate-800 text-lg"><strong>Status: </strong> 
-                    <strong className={`${ itemAnimais.status === 'Disponível' ? "text-green-600" : "text-red-600"}`}>
+                    <strong className={`${ itemAnimais.status === 'Disponível' ? 'text-green-600' : itemAnimais.status === 'Adotado' ? 'text-yellow-500' : 'text-red-600'}`}>
                         {textFormatter(itemAnimais.status)}
                     </strong> 
                 </p>

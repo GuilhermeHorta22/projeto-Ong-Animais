@@ -140,7 +140,7 @@ function AnimaisPage()
                                     <p className="text-gray-600">Porte: {textFormatter(animal.porte)}</p>
                                     <p
                                         className={`font-semibold ${
-                                        animal.status === 'Disponível' ? 'text-green-600' : 'text-red-600'
+                                        animal.status === 'Disponível' ? 'text-green-600' : animal.status === 'Adotado' ? 'text-yellow-500' : 'text-red-600'
                                         }`}
                                     >
                                         {animal.status}
