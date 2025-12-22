@@ -58,4 +58,11 @@ export class AnimalService {
         );
         return result.rows[0];
     }
+
+    async atualizarStatus(id: number, status: string): Promise<void> {
+        const result = await pool.query(
+            'UPDATE animal SET status = $1 WHERE id = $2',
+            [status, id]
+        );
+    }
 }
