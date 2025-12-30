@@ -190,6 +190,11 @@ function RegistrarAdocao()
                 {selectedAnimal && (
                     <div className="bg-white shadow rounded-xl p-4 border">
                         <h3 className="font-semibold text-lg">Animal Selecionado</h3>
+                        <img 
+                            src={`http://localhost:3000/uploads/${selectedAnimal.foto_url}`} 
+                            alt={selectedAnimal.nome}
+                            className="w-70 h-70 object-cover" 
+                        />
                         <p><strong>Nome: </strong> {textFormatter(selectedAnimal.nome)} </p>
                         <p><strong>Espécie: </strong> {textFormatter(selectedAnimal.especie)} </p>
                         <p><strong>Porte: </strong> {textFormatter(selectedAnimal.porte)} </p>
