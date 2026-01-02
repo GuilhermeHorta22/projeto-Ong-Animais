@@ -30,7 +30,8 @@ export const listarAdocao = async (req: Request, res: Response) => {
                     especie: animal?.especie,
                     raca: animal?.raca,
                     idade: animal?.idade,
-                    porte: animal?.porte
+                    porte: animal?.porte,
+                    foto_url: animal?.foto_url
                 },
                 usuario: {
                     id: usuario?.id,
@@ -80,11 +81,12 @@ export const deletarAdocao = async (req: Request, res: Response) => {
 
     if(result !== null)
     {
+        await animalService.atualizarStatus(result.id_animal, "Disponível");
         await service.deletar(id);
-        return res.status(204);
+        return res.sendStatus(204);
     }
     else
-        return res.status(400).json({error: 'Não existe uma adoção com esse id.'});
+        return res.status(404).json({message: 'Não existe uma adoção com esse id.'});
 }
 
 export const atualizarAdocao = async (req: Request, res: Response) => {
