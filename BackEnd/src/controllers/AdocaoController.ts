@@ -2,9 +2,11 @@ import { Request, Response } from 'express';
 import { AdocaoService } from '../services/AdocaoService.js';
 import { isDataView } from 'util/types';
 import { AnimalService } from '../services/AnimalService.js';
+import { UsuarioService } from '../services/UsuarioService.js';
 
 const service = new AdocaoService();
 const animalService = new AnimalService();
+const usuarioService = new UsuarioService();
 
 export const listarAdocao = async (req: Request, res: Response) => {
     const adocoes = await service.listar();
@@ -12,7 +14,36 @@ export const listarAdocao = async (req: Request, res: Response) => {
     if(adocoes === null)
         return res.status(200).json({message: 'Não tem adoções cadastrada.'});
 
-    return res.json(adocoes);
+    const adocaoObjeto = await Promise.all(
+        adocoes.map(async (adocao) => {
+            const [animal, usuario] = await Promise.all([
+                animalService.buscar(adocao.id_animal),
+                usuarioService.buscar(adocao.id_usuario)
+            ]);
+
+            return {
+                id: adocao.id,
+                data: adocao.data_adocao,
+                animal: {
+                    id: animal?.id,
+                    nome: animal?.nome,
+                    especie: animal?.especie,
+                    raca: animal?.raca,
+                    idade: animal?.idade,
+                    porte: animal?.porte
+                },
+                usuario: {
+                    id: usuario?.id,
+                    nome: usuario?.nome,
+                    cpf: usuario?.cpf,
+                    telefone: usuario?.telefone,
+                    email: usuario?.email
+                }
+            };
+        })
+    );
+
+    return res.json(adocaoObjeto);
 }
 
 export const buscarAdocao = async (req: Request, res: Response) => {
@@ -25,6 +56,7 @@ export const buscarAdocao = async (req: Request, res: Response) => {
 
     if(adocao === null)
         return res.status(404).json({message: 'Não existe essa adoção.'});
+
     return res.json(adocao);
 }
 
