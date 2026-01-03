@@ -111,14 +111,11 @@ function EditarAnimal()
                     />
 
                     <Label className="text-slate-800">Espécie</Label>
-                    <Input 
-                        type="text"
-                        name="especie"
-                        value={animal.especie}
-                        onChange={handleChange}
-                        placeholder="Espécie"
-                        className="border border-slate-400 rounded-lg p-2"
-                    />
+                    <Select name="especie" value={animal.especie} onChange={handleChange} className="border border-slate-400 rounded-lg p-2">
+                        <option value="">Selecione...</option>
+                        <option value="cachorro">Cachorro</option>
+                        <option value="gato">Gato</option>
+                    </Select>
                     
                     <Label className="text-slate-800">Raça</Label>
                     <Input 
@@ -141,14 +138,12 @@ function EditarAnimal()
                     />
 
                     <Label className="text-slate-800">Porte</Label>
-                    <Input 
-                        type="text"
-                        name="porte"
-                        value={animal.porte}
-                        onChange={handleChange}
-                        placeholder="Porte"
-                        className="border border-slate-400 rounded-lg p-2"
-                    />
+                    <Select name="porte" value={animal.porte} onChange={handleChange} className="border border-slate-400 rounded-lg p-2">
+                        <option value="">Selecione...</option>
+                        <option value="pequeno">Pequeno</option>
+                        <option value="medio">Médio</option>
+                        <option value="grande">Grande</option>
+                    </Select>
 
                     <Label className="text-slate-800">Descrição</Label>
                     <textarea
