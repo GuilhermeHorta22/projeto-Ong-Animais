@@ -166,21 +166,17 @@ function RegistrarAdocao()
                 }}
                 className="bg-white rounded-xl shadow-xl border-2 p-8 space-y-10 border-slate-800"
             >
-                {/* TÍTULO */}
                 <h1 className="text-3xl font-bold text-slate-800 text-center">
                     Registrar Adoção
                 </h1>
 
-                {/* GRID PRINCIPAL */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
 
-                    {/* ================= ANIMAIS ================= */}
                     <div className="space-y-6">
                         <h2 className="text-xl font-bold text-slate-800 text-center">
                             Animais para Adoção
                         </h2>
 
-                        {/* LISTA */}
                         <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
                             {animaisDisponiveis.map(animal => (
                                 <label
@@ -203,7 +199,6 @@ function RegistrarAdocao()
                             ))}
                         </div>
 
-                        {/* DETALHES */}
                         {selectedAnimal && (
                             <div className="border rounded-xl p-4 bg-slate-50 space-y-3">
                                 <img
@@ -225,13 +220,11 @@ function RegistrarAdocao()
                         )}
                     </div>
 
-                    {/* ================= USUÁRIOS ================= */}
                     <div className="space-y-6">
                         <h2 className="text-xl font-bold text-slate-800 text-center">
                             Adotantes Cadastrados
                         </h2>
 
-                        {/* LISTA */}
                         <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
                             {usuariosDisponiveis.map(usuario => (
                                 <label
@@ -254,7 +247,6 @@ function RegistrarAdocao()
                             ))}
                         </div>
 
-                        {/* DETALHES */}
                         {selectedUsuario && (
                             <div className="border rounded-xl p-4 bg-slate-50 space-y-2">
                                 <p className="text-slate-800 text-lg"><strong>Nome:</strong> {textFormatter(selectedUsuario.nome)}</p>
@@ -266,11 +258,9 @@ function RegistrarAdocao()
                     </div>
                 </div>
 
-                {/* MENSAGENS */}
                 {error && <p className="text-red-700 text-center">{error}</p>}
                 {success && <p className="text-green-700 text-center">{success}</p>}
 
-                {/* BOTÕES */}
                 <div className="flex justify-center gap-6 pt-4">
                     <Button 
                         type="submit"
