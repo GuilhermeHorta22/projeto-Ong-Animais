@@ -38,7 +38,8 @@ export const listarAdocao = async (req: Request, res: Response) => {
                     nome: usuario?.nome,
                     cpf: usuario?.cpf,
                     telefone: usuario?.telefone,
-                    email: usuario?.email
+                    email: usuario?.email,
+                    endereco: usuario?.endereco
                 }
             };
         })
