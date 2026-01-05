@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Button from '../../components/Button';
-import Label from '../../components/Label';
 import { useAuthGuard } from '../../utils/validation/useAuthGuard';
 import { textFormatter } from '../../utils/formatters/textFormatter';
 import { telefoneFormatter } from '../../utils/formatters/telefoneFormatter';
