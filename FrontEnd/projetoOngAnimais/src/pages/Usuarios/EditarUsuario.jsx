@@ -78,7 +78,7 @@ function EditarUsuario()
                 body: JSON.stringify(usuario)
             });
 
-            const data = response.json();
+            const data = await response.json();
             if(!response.ok)
             {
                 setError(data.error || "Erro ao atualizar os dados do usuário.");
