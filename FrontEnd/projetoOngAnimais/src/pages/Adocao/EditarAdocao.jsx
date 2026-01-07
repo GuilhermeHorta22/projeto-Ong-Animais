@@ -174,6 +174,10 @@ function EditarAdocao()
         animal => animal.id === adocao.id_animal
     );
 
+    const usuarioSelecionado = usuarios.find(
+        usuario => usuario.id === adocao.id_usuario
+    )
+
     return (
         <div className="max-w-6xl mx-auto p-6">
             <form 
@@ -184,7 +188,7 @@ function EditarAdocao()
                     Editar adoção
                 </h1>
 
-                <div clasName="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div className="space-y-6">
                         <h2 className="text-xl font-bold text-slate-800 text-center">
                             Animais para Adoção
@@ -195,7 +199,7 @@ function EditarAdocao()
                                 <label 
                                     key={animal.id}
                                     className={`flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition text-slate-800
-                                        ${adocao?.id === animal.id
+                                        ${adocao?.id_animal === animal.id
                                             ? 'bg-green-50 border-green-600'
                                             : 'hover:bg-slate-50 border-slate-800'}`}
                                 >
@@ -237,7 +241,34 @@ function EditarAdocao()
                     </div>
 
                     {/* aqui eu vou colocar os adotantes cadastrado */}
+                    <div className="space-y-6">
+                            <h2 className="text-xl font-bold text-slate-800 text-center">
+                                Adotantes cadastrados
+                            </h2>
 
+                            <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+                                {usuariosDisponiveis.map(usuario => (
+                                    <label 
+                                        key={usuario.id} 
+                                        className={`flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition text-slate-800
+                                            ${adocao?.id_usuario === usuario.id
+                                            ? 'bg-blue-50 border-blue-600'
+                                            : 'hover:bg-slate-50 border-slate-800'}`}
+                                    >
+                                        <input 
+                                            type="radio"
+                                            name="usuario"
+                                            checked={adocao?.id_usuario === usuario.id} 
+                                            onChange={handleSubmit}
+                                        />
+
+                                        <span className="font-medium">
+                                            {textFormatter(usuario.nome)}
+                                        </span>
+                                    </label>
+                                ))}
+                            </div>
+                    </div>
 
                     {/* colocar mensagem de erro ou sucesso */}
 
