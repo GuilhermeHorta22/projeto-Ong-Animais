@@ -4,10 +4,16 @@ import bcrypt from 'bcrypt';
 import { pool } from '../dataBase/connection.js';
 import { Usuario } from '../models/UsuarioModel.js';
 import dotenv from 'dotenv';
+import crypto from 'crypto';
+import { UsuarioService } from '../services/UsuarioService.js';
+import { PasswordResetService } from '../services/PasswordResetService.js'
 
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
+
+const usuarioService = new UsuarioService();
+const passwordResetService = new PasswordResetService();
 
 export const login = async (req: Request, res: Response) => {
     const { email, senha} = req.body;
@@ -39,4 +45,35 @@ export const login = async (req: Request, res: Response) => {
     {
         return res.status(500).json({error: 'Erro interno ao realiazr login.'});
     }
+}
+
+export const forgotPassword = async (req: Request, res: Response) => {
+    const { email } = req.body;
+    
+    if(!email)
+        return res.status(400).json({error: "Email é obrigatório."});
+
+    const usuario = await usuarioService.findByEmail(email);
+
+    if(!usuario)
+        return res.status(200).json({message: "Se o email existir, enviaremos instruções."});
+
+    const token = crypto.randomBytes(32).toString("hex");
+    const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
+
+    await passwordResetService.criar({
+        usuario_id: usuario.id,
+        token,
+        expires_at: expiresAt
+    });
+
+    const link = `http://localhost:5173/reset-senha/${token}`;
+
+    await sendEmail(
+        usuario.email,
+        "Recuperação de senha",
+        `Clique no link para redefinir sua senha: ${link}`
+    );
+
+    return res.json({ message: "Se o email existir, enviaremos instruções." });
 }
