@@ -4,6 +4,7 @@ import { useAuthGuard } from "../../utils/validation/useAuthGuard";
 import { textFormatter } from "../../utils/formatters/textFormatter";
 import { telefoneFormatter } from "../../utils/formatters/telefoneFormatter";
 import { cpfFormatter } from "../../utils/formatters/cpfFormatter";
+import Button from "../../components/Button";
 
 function EditarAdocao() 
 {
@@ -17,6 +18,7 @@ function EditarAdocao()
     });
     const [usuarios, setUsuarios] = useState([]);
     const [animais, setAnimais] = useState([]);
+    const [idAnimal, setIdAnimal] = useState(null);
 
     const navigate = useNavigate();
 
@@ -39,6 +41,7 @@ function EditarAdocao()
                     });
                     const data = await response.json();
                     setAdocao(data);
+                    setIdAnimal(data.id_animal);
                 }
                 catch(err)
                 {
@@ -127,7 +130,7 @@ function EditarAdocao()
     }, [isAuthorized, token]);
 
     const animaisDisponiveis = animais.filter(
-        animal => animal.status === "Disponível" || animal.id === adocao.id_animal
+        animal => animal.status === "Disponível" || animal.id === idAnimal
     )
 
     if(isAuthorized === false)
@@ -136,7 +139,11 @@ function EditarAdocao()
     //vamos pegar as alterações
     const handleChange = async (e) => {
         const { name, value } = e.target;
-        setAdocao((prev) => ({...prev, [name]: value}));
+        setAdocao((prev) => ({
+            ...prev,
+            [name]: name === "id_animal" || name === "id_usuario"
+                ? Number(value) : value
+            }));
     }
 
     //vamos realizar o update das informações
@@ -205,7 +212,8 @@ function EditarAdocao()
                                 >
                                     <input 
                                         type="radio" 
-                                        name="animal"
+                                        name="id_animal"
+                                        value={animal.id}
                                         checked={adocao?.id_animal === animal.id}
                                         onChange={handleChange}
                                     />
@@ -248,32 +256,55 @@ function EditarAdocao()
 
                             <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
                                 {usuariosDisponiveis.map(usuario => (
-                                    <label 
-                                        key={usuario.id} 
+                                    <label
+                                        key={usuario.id}
                                         className={`flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition text-slate-800
                                             ${adocao?.id_usuario === usuario.id
-                                            ? 'bg-blue-50 border-blue-600'
-                                            : 'hover:bg-slate-50 border-slate-800'}`}
+                                                ? 'bg-blue-50 border-blue-600'
+                                                : 'hover:bg-slate-50 border-slate-800'}`}
                                     >
-                                        <input 
+                                        <input
                                             type="radio"
-                                            name="usuario"
-                                            checked={adocao?.id_usuario === usuario.id} 
-                                            onChange={handleSubmit}
+                                            name="id_usuario"
+                                            value={usuario.id}
+                                            checked={adocao?.id_usuario === usuario.id}
+                                            onChange={handleChange}
                                         />
-
                                         <span className="font-medium">
                                             {textFormatter(usuario.nome)}
                                         </span>
                                     </label>
                                 ))}
                             </div>
-                    </div>
 
-                    {/* colocar mensagem de erro ou sucesso */}
+                            {usuarioSelecionado && (
+                                <div className="border rounded-xl p-4 bg-slate-50 space-y-2">
+                                    <p className="text-slate-800 text-lg"><strong>Nome: </strong> {textFormatter(usuarioSelecionado.nome)} </p>
+                                    <p className="text-slate-800 text-lg"><strong>CPF: </strong> {cpfFormatter(usuarioSelecionado.cpf)} </p>
+                                    <p className="text-slate-800 text-lg"><strong>Telefone: </strong> {telefoneFormatter(usuarioSelecionado.telefone)} </p>
+                                    <p className="text-slate-800 text-lg"><strong>Tipo: </strong> {textFormatter(usuarioSelecionado.tipo)} </p>
+                                </div>
+                            )}
+                        </div>
+            </div>
 
+                {error && <p className="text-red-700 text-center">{error}</p>}
+                {success && <p className="text-green-700 text-center">{success}</p>}
 
-                    {/* colocar o button de confirmar e de cancelar */}
+                <div className="flex justify-center gap-6 pt-4">
+                    <Button
+                        onClick={handleSubmit}
+                        className="bg-green-700 hover:bg-green-800"
+                    >
+                        Confirmar
+                    </Button>
+
+                    <Button
+                        onClick={() => navigate("/admin/relatorio-adocao")}
+                        className="bg-red-700 hover:bg-red-800"
+                    >
+                        Cancelar
+                    </Button>
                 </div>
             </form>
         </div>
