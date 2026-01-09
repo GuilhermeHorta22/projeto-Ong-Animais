@@ -28,6 +28,17 @@ export class UsuarioService {
         return false;
     }
 
+    async findByEmail(email: string): Promise<Usuario | null> {
+        const result = await pool.query(
+            'SELECT * FROM usuario WHERE email = $1', [email]
+        );
+
+        if(result.rowCount === 0)
+            return null;
+
+        return result.rows[0];
+    }
+
     async listar(): Promise<Usuario[] | null> {
         const result = await pool.query('SELECT * FROM usuario');
 
