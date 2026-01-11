@@ -24,5 +24,14 @@ export class PasswordResetService {
         return result.rows[0];
     }
 
+    //marcando token como usado
+    async marcarComoUsado(id: number): Promise<void> {
+        await pool.query(`
+            UPDATE password_reset
+            SET used = true
+            WHERE id = $1`, [id]
+        );
+    }
+
     
 }
