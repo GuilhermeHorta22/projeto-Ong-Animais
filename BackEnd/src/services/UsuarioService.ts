@@ -117,4 +117,11 @@ export class UsuarioService {
         );
         return result.rows[0];
     }
+
+    async atualizarSenha(id: number, senhaHash: string): Promise<void> {
+        await pool.query(`
+            UPDATE usuario
+            SET senha = $1
+            WHERE id = $2`, [senhaHash, id]);
+    }
 }
