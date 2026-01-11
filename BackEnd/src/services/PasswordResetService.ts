@@ -33,5 +33,12 @@ export class PasswordResetService {
         );
     }
 
-    
+    //invalidando tokens antigos do usuário
+    async invalidarTokenDoUsuario(usuario_id: number): Promise<void> {
+        await pool.query(`
+            UPDATE password_reset
+            SET used = true
+            WHERE usuario_id = $1`, [usuario_id]
+        );
+    }
 }
