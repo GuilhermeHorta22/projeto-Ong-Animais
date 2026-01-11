@@ -8,4 +8,21 @@ export class PasswordResetService {
             VALUES ($1, $2, $3)`, [data.usuario_id, data.token, data.expires_at]
         );
     }
+
+    //buscando token valido
+    async findValidToken(token: string) {
+        const result = await pool.query(
+            `SELECT * FROM password_reset
+            WHERE token = $1
+            AND used = false
+            AND expires_at > NOW()`, [token]
+        );
+
+        if(result.rowCount === 0)
+            return null;
+
+        return result.rows[0];
+    }
+
+    
 }
