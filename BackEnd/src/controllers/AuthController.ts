@@ -6,7 +6,8 @@ import { Usuario } from '../models/UsuarioModel.js';
 import dotenv from 'dotenv';
 import crypto from 'crypto';
 import { UsuarioService } from '../services/UsuarioService.js';
-import { PasswordResetService } from '../services/PasswordResetService.js'
+import { PasswordResetService } from '../services/PasswordResetService.js';
+import { sendEmail } from '../utils/Email.js';
 
 dotenv.config();
 
@@ -76,4 +77,24 @@ export const forgotPassword = async (req: Request, res: Response) => {
     );
 
     return res.json({ message: "Se o email existir, enviaremos instruções." });
+}
+
+export const resetPassword = async (req: Request, res: Response) => {
+    const { token } = req.params;
+    const { novaSenha } = req.body;
+
+    const reset = await passwordResetService.buscarPorToken(token);
+
+    const dataAtual = new Date();
+
+    if(!reset || reset.used || reset.expires_at < dataAtual)
+        return res.status(400).json({erro: "Token inválido ou expirado."});
+
+    const hash = await bcrypt.hash(novaSenha, 10);
+
+    await usuarioService.AtualizarSenha(reset.usuario_id, hash);
+
+    await passwordResetService.marcarComoUsado(reset.id);
+
+    return res.json({message: "Senha atualizada com sucesso."});
 }
