@@ -83,7 +83,7 @@ export const resetPassword = async (req: Request, res: Response) => {
     const { token } = req.params;
     const { novaSenha } = req.body;
 
-    const reset = await passwordResetService.buscarPorToken(token);
+    const reset = await passwordResetService.findValidToken(token);
 
     const dataAtual = new Date();
 
@@ -92,7 +92,7 @@ export const resetPassword = async (req: Request, res: Response) => {
 
     const hash = await bcrypt.hash(novaSenha, 10);
 
-    await usuarioService.AtualizarSenha(reset.usuario_id, hash);
+    await usuarioService.atualizarSenha(reset.usuario_id, hash);
 
     await passwordResetService.marcarComoUsado(reset.id);
 
