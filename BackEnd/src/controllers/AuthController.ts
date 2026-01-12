@@ -59,6 +59,8 @@ export const forgotPassword = async (req: Request, res: Response) => {
     if(!usuario)
         return res.status(200).json({message: "Se o email existir, enviaremos instruções."});
 
+    await passwordResetService.invalidarTokenDoUsuario(usuario.id);
+
     const token = crypto.randomBytes(32).toString("hex");
     const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
 
@@ -83,11 +85,12 @@ export const resetPassword = async (req: Request, res: Response) => {
     const { token } = req.params;
     const { novaSenha } = req.body;
 
+    if(!novaSenha || novaSenha.length < 6)
+        return res.status(400).json({error: "A senha deve ter no mínimo 6 caracteres."});
+
     const reset = await passwordResetService.findValidToken(token);
 
-    const dataAtual = new Date();
-
-    if(!reset || reset.used || reset.expires_at < dataAtual)
+    if(!reset)
         return res.status(400).json({erro: "Token inválido ou expirado."});
 
     const hash = await bcrypt.hash(novaSenha, 10);
