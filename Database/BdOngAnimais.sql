@@ -252,3 +252,11 @@ ALTER TABLE ONLY public.adocao
 -- PostgreSQL database dump complete
 --
 
+-- adiciona nova tabela do banco de dados
+CREATE TABLE password_reset (
+  id SERIAL PRIMARY KEY,
+  usuario_id INT NOT NULL,
+  token VARCHAR(255) NOT NULL,
+  expires_at TIMESTAMP NOT NULL,
+  used BOOLEAN DEFAULT false
+);
