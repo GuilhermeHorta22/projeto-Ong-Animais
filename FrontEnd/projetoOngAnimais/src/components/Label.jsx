@@ -1,7 +1,7 @@
 function Label ({ children, className = "", ...props})
 {
     return(
-        <label {...props} className={`block  font-medium mb-0 select-none ${className || "text-stone-50"}`} >
+        <label {...props} className={`block  font-medium mb-0 select-none ${className || "text-slate-800"}`} >
             {children}
         </label>
     );
