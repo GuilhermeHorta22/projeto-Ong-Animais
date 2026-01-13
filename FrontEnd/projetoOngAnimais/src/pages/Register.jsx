@@ -115,7 +115,6 @@ function Register()
                             value={nome}
                             onChange={(e) => setNome(e.target.value)}
                             maxLength="30"
-                            className="border border-slate-400 rounded-lg p-2"
                         />
 
                         <Label className="text-slate-800">Cpf</Label>
@@ -125,7 +124,6 @@ function Register()
                             value={cpfFormatter(cpf)}
                             onChange={(e) => setCpf(e.target.value)}
                             maxLength="14"
-                            className="border border-slate-400 rounded-lg p-2"
                         />
 
                         <Label className="text-slate-800">Telefone</Label>
@@ -135,7 +133,6 @@ function Register()
                             value={telefoneFormatter(telefone)}
                             onChange={(e) => setTelefone(e.target.value)}
                             maxLength="15"
-                            className="border border-slate-400 rounded-lg p-2"
                         />
 
                         <Label className="text-slate-800">Endereço</Label>
@@ -145,7 +142,6 @@ function Register()
                             value={endereco}
                             onChange={(e) => setEndereco(e.target.value)}
                             maxLengh="35"
-                            className="border border-slate-400 rounded-lg p-2"
                         />
 
                         <Label className="text-slate-800">E-mail</Label>
@@ -155,7 +151,6 @@ function Register()
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             maxLength="30"
-                            className="border border-slate-400 rounded-lg p-2"
                         />
 
                         <Label className="text-slate-800">Senha</Label>
@@ -165,7 +160,6 @@ function Register()
                             value={senha}
                             onChange={(e) => setSenha(e.target.value)}
                             maxLength="15"
-                            className="border border-slate-400 rounded-lg p-2"
                         />
 
                         {tipoUsuario === "ADMIN" && (

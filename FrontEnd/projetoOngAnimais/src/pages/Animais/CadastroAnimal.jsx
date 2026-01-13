@@ -121,7 +121,6 @@ function CadastroAnimal ()
                         placeholder="Nome do animal"
                         value={nome}
                         onChange={(e) => setNome(e.target.value)}
-                        className="border border-slate-400 rounded-lg p-2"
                     />
 
                     <Label className="text-slate-800">Espécie</Label>
@@ -137,7 +136,6 @@ function CadastroAnimal ()
                         placeholder="Raça do animal"
                         value={raca}
                         onChange={(e) => setRaca(e.target.value)}
-                        className="border border-slate-400 rounded-lg p-2"
                     />
 
                     <Label className="text-slate-800">Idade</Label>
@@ -146,7 +144,6 @@ function CadastroAnimal ()
                         placeholder="Idade do animal"
                         value={idade}
                         onChange={(e) => setIdade(parseInt(e.target.value))}
-                        className="border border-slate-400 rounded-lg p-2"
                     />
 
                     <Label className="text-slate-800">Porte</Label>
