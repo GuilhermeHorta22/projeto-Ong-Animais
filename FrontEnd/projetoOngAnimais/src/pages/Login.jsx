@@ -56,15 +56,15 @@ function Login()
 
     return (
         <div className="w-screen h-screen bg-slate-300 flex justify-center items-center">
-            <div className="w-[400px] bg-slate-800 rounded-2xl shadow-xl p-8 space-y-6">
-                <h1 className="text-white text-2xl font-semibold text-center mb-6">
+            <div className="w-[400px] bg-white rounded-2xl shadow-xl p-8 space-y-6">
+                <h1 className="text-slate-800 text-2xl font-bold text-center mb-6">
                     Login do Sistema
                 </h1>
                 <form onSubmit={(e) => {
                     e.preventDefault();
                     handleLogin(e);}} className="space-y-4">
                     <div>
-                        <Label>Email</Label>
+                        <Label>E-mail</Label>
                         <Input
                             type="text"
                             placeholder="Digite seu E-mail"
@@ -88,10 +88,17 @@ function Login()
                 </form>
                 
                 <div className="text-center text-stone-200 font-medium mt-4 select-none">
-                    <p>
+                    <p className="text-slate-800">
                         Não tem conta?{" "}
-                        <Link to="/register" className="text-blue-400 hover:underline">
+                        <Link to="/register" className="text-blue-700 hover:underline">
                         Cadastre-se
+                        </Link>
+                    </p>
+
+                    <p className="text-slate-800">
+                        Esqueceu a senha?{" "}
+                        <Link to="/forgot-password" className="text-rose-700 hover:underline">
+                        Trocar senha
                         </Link>
                     </p>
                 </div>
