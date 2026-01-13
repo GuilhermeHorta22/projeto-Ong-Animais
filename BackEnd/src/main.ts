@@ -1,3 +1,7 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 import express from 'express';
 import { pool } from './dataBase/connection.js';
 import routes from './routes/indexRoutes.js';
