@@ -57,7 +57,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
     const usuario = await usuarioService.findByEmail(email);
 
     if(!usuario)
-        return res.status(200).json({message: "Se o email existir, enviaremos instruções."});
+        return res.status(200).json({message: "Email não cadastrado no sistema."});
 
     await passwordResetService.invalidarTokenDoUsuario(usuario.id);
 
