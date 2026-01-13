@@ -15,6 +15,7 @@ import RegistrarAdocao from './pages/Adocao/RegistrarAdocao.jsx';
 import AdocaoRelatorio from './pages/Adocao/AdocaoRelatorio.jsx';
 import EditarUsuario from './pages/Usuarios/EditarUsuario.jsx';
 import EditarAdocao from './pages/Adocao/EditarAdocao.jsx';
+import ForgotPassword from './pages/ForgotPassword.jsx';
 
 
 //vou criar minhas routes para as pages
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/register", //meu caminho
     element: <Register /> //page de cadastro de usuarios
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />
   },
   {
     path: "/adotante",
