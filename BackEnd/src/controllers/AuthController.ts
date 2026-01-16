@@ -70,7 +70,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
         expires_at: expiresAt
     });
 
-    const link = `http://localhost:5173/reset-senha/${token}`;
+    const link = `http://localhost:5174/reset-senha/${token}`;
 
     await sendEmail(
         usuario.email,
